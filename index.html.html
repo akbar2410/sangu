@@ -1,0 +1,1259 @@
+<!doctype html><html lang="id"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style></head><body><title>Prototipe SANGU</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Public+Sans:wght@400;500;600;700&family=Saira+Stencil+One&display=swap">
+<style>
+:root{
+  --bg:#EDEFF5; --surface:#FFFFFF; --surface-2:#F5F6FA; --ink:#141A2E; --ink-2:#464E6B; --muted:#6B7290;
+  --line:#D8DCE7; --line-2:#BFC5D5;
+  --accent:#34409E; --accent-2:#27307A; --accent-ink:#FFFFFF; --accent-soft:#E2E5F7;
+  --steel-1:#F1F3F7; --steel-2:#D9DDE6; --steel-3:#A3AABB; --steel-4:#7D8497;
+  --good:#1D7F46; --good-soft:#E1F2E8; --warn:#8F5F00; --warn-bar:#E3A21A; --warn-soft:#FBF0D6; --bad:#BF2F24; --bad-soft:#FBE3E0;
+  --r-hijau:#1F8A4C; --r-kuning:#E0A500; --r-merah:#CC3328;
+  --hijau-soft:#E3F3E9; --kuning-soft:#FBF1D2; --merah-soft:#FBE2DF;
+  --nl-a:#1B6E36; --nl-a-ink:#FFFFFF; --nl-b:#7AB944; --nl-b-ink:#10240A; --nl-c:#F1C21B; --nl-c-ink:#2B2200; --nl-d:#D2392E; --nl-d-ink:#FFFFFF;
+  --s1:#2a78d6; --s-ctx:#9AA0B3; --grid:#E3E6EE; --axis:#C3C8D5;
+  --shadow:0 1px 2px rgba(20,26,46,.06),0 6px 20px rgba(20,26,46,.08);
+  --font-body:'Public Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --font-cond:'Barlow Condensed','Arial Narrow',system-ui,sans-serif;
+  --font-stencil:'Saira Stencil One','Barlow Condensed','Arial Narrow',sans-serif;
+  --font-mono:'IBM Plex Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --bg:#0E1120; --surface:#161A2B; --surface-2:#1C2135; --ink:#ECEEF7; --ink-2:#B6BBD2; --muted:#8C93AD;
+    --line:#2A304A; --line-2:#3C4463;
+    --accent:#9BA6FF; --accent-2:#B8C0FF; --accent-ink:#0E1120; --accent-soft:#232A52;
+    --steel-1:#2B3147; --steel-2:#20263A; --steel-3:#5E6784; --steel-4:#8A92AB;
+    --good:#4CC27E; --good-soft:#15301F; --warn:#F0B84A; --warn-soft:#33280F; --bad:#FF7A6E; --bad-soft:#3A1916;
+    --hijau-soft:#14301F; --kuning-soft:#33290C; --merah-soft:#3A1815;
+    --s1:#3987e5; --s-ctx:#5E6580; --grid:#252B42; --axis:#3A4262;
+    --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3);
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --bg:#0E1120; --surface:#161A2B; --surface-2:#1C2135; --ink:#ECEEF7; --ink-2:#B6BBD2; --muted:#8C93AD;
+  --line:#2A304A; --line-2:#3C4463;
+  --accent:#9BA6FF; --accent-2:#B8C0FF; --accent-ink:#0E1120; --accent-soft:#232A52;
+  --steel-1:#2B3147; --steel-2:#20263A; --steel-3:#5E6784; --steel-4:#8A92AB;
+  --good:#4CC27E; --good-soft:#15301F; --warn:#F0B84A; --warn-soft:#33280F; --bad:#FF7A6E; --bad-soft:#3A1916;
+  --hijau-soft:#14301F; --kuning-soft:#33290C; --merah-soft:#3A1815;
+  --s1:#3987e5; --s-ctx:#5E6580; --grid:#252B42; --axis:#3A4262;
+  --shadow:0 1px 2px rgba(0,0,0,.3),0 6px 20px rgba(0,0,0,.3);
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--font-body);font-size:15px;line-height:1.5;padding-inline:16px;padding-block:0 40px;-webkit-font-smoothing:antialiased}
+.app{max-width:1180px;margin:0 auto}
+h1,h2,h3,h4{margin:0;text-wrap:balance}
+p{margin:0}
+button,select,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+a{color:var(--accent)}
+
+/* header */
+.top{display:flex;flex-wrap:wrap;align-items:center;gap:12px 20px;padding-block:18px 14px}
+.brand{display:flex;align-items:center;gap:14px;margin-right:auto;min-width:0}
+.wordmark{font-family:var(--font-stencil);font-size:36px;letter-spacing:.05em;color:var(--accent);line-height:1}
+.brand-sub{color:var(--ink-2);font-size:13.5px;max-width:30ch;line-height:1.3}
+.seg{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:3px;gap:2px;flex-wrap:wrap}
+.seg button{border:0;background:transparent;padding:7px 14px;border-radius:7px;cursor:pointer;font-weight:600;font-size:14px;color:var(--ink-2)}
+.seg button[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink)}
+.seg.sm button{padding:5px 10px;font-size:13px}
+.proto{font-family:var(--font-mono);font-size:11.5px;color:var(--muted);border:1px dashed var(--line-2);border-radius:6px;padding:3px 8px;white-space:nowrap}
+
+/* thesis strip */
+.strip{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.25fr) minmax(0,1fr);align-items:center;gap:14px;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px}
+.s-end{display:flex;flex-direction:column;gap:5px;min-width:0;align-items:flex-start}
+.s-end.r{align-items:flex-end;text-align:right}
+.s-lab{font-family:var(--font-cond);font-weight:600;letter-spacing:.07em;text-transform:uppercase;font-size:12.5px;color:var(--muted)}
+.bridge{display:flex;align-items:center;gap:8px;min-width:0}
+.b-seg{flex:1;height:4px;border-radius:2px;background:repeating-linear-gradient(90deg,var(--line-2) 0 8px,transparent 8px 14px);transition:background .5s}
+.b-knot{font-size:13px;font-weight:600;padding:5px 12px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);color:var(--ink-2);text-align:center}
+.strip.closed .b-seg{background:var(--good)}
+.strip.closed .b-knot{background:var(--good-soft);border-color:transparent;color:var(--good)}
+@media (max-width:720px){
+  .strip{grid-template-columns:minmax(0,1fr) minmax(0,1fr);grid-template-areas:"l r" "b b";row-gap:10px}
+  .s-end.l{grid-area:l}.s-end.r{grid-area:r}.bridge{grid-area:b}
+}
+
+/* chips, dots, badges */
+.chip{display:inline-flex;align-items:center;gap:6px;font-size:13px;font-weight:600;padding:4px 10px;border-radius:999px;background:var(--surface-2);border:1px solid var(--line);max-width:100%;line-height:1.3}
+.chip.good{background:var(--good-soft);color:var(--good);border-color:transparent}
+.chip.bad{background:var(--bad-soft);color:var(--bad);border-color:transparent}
+.chip.warn{background:var(--warn-soft);color:var(--warn);border-color:transparent}
+.dot{width:10px;height:10px;border-radius:50%;flex:none;display:inline-block}
+.dot.hijau{background:var(--r-hijau)}.dot.kuning{background:var(--r-kuning)}.dot.merah{background:var(--r-merah)}.dot.none{background:var(--line-2)}
+.nl{display:inline-grid;place-items:center;width:24px;height:24px;border-radius:6px;font-family:var(--font-cond);font-weight:700;font-size:16px;line-height:1;flex:none}
+.nl-A{background:var(--nl-a);color:var(--nl-a-ink)}.nl-B{background:var(--nl-b);color:var(--nl-b-ink)}.nl-C{background:var(--nl-c);color:var(--nl-c-ink)}.nl-D{background:var(--nl-d);color:var(--nl-d-ink)}
+.nl.prov{outline:2px dashed var(--muted);outline-offset:2px}
+.pb{display:inline-flex;align-items:center;gap:4px;font-size:12px;font-weight:700;padding:2px 8px;border-radius:999px;white-space:nowrap}
+.pb.cocok{background:var(--good-soft);color:var(--good)}.pb.batasi{background:var(--warn-soft);color:var(--warn)}.pb.hindari{background:var(--bad-soft);color:var(--bad)}
+.pill{display:inline-flex;align-items:center;gap:5px;font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;align-self:flex-start;white-space:nowrap}
+.pill.good{background:var(--good-soft);color:var(--good)}.pill.bad{background:var(--bad-soft);color:var(--bad)}.pill.warn{background:var(--warn-soft);color:var(--warn)}
+
+/* tabs */
+.tabs{display:flex;gap:4px;margin-block:18px 16px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tabs::-webkit-scrollbar{display:none}
+.tab{border:0;background:none;padding:8px 14px 11px;cursor:pointer;display:flex;flex-direction:column;align-items:flex-start;gap:0;border-bottom:3px solid transparent;margin-bottom:-1px;white-space:nowrap;color:var(--ink-2)}
+.tab small{font-family:var(--font-cond);font-weight:600;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+.tab span{font-weight:600;font-size:15px}
+.tab[aria-selected="true"]{border-bottom-color:var(--accent);color:var(--ink)}
+.tab[aria-selected="true"] small{color:var(--accent)}
+
+/* layout */
+.grid-2{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}
+.stack-v{display:flex;flex-direction:column;gap:16px;min-width:0}
+@media (max-width:900px){.grid-2{grid-template-columns:minmax(0,1fr)}}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:20px;display:flex;flex-direction:column;gap:16px;min-width:0}
+@media (max-width:480px){.card{padding:16px}}
+.eyebrow{font-family:var(--font-cond);font-weight:600;font-size:13px;letter-spacing:.09em;text-transform:uppercase;color:var(--accent)}
+.sec-head{display:flex;flex-direction:column;gap:6px}
+.sec-head h2{font-family:var(--font-cond);font-weight:700;font-size:28px;line-height:1.05}
+.sec-head p{color:var(--ink-2);max-width:64ch}
+.h{font-family:var(--font-cond);font-weight:700;font-size:21px;line-height:1.1}
+.muted{color:var(--muted)}.small{font-size:13px}.mono{font-family:var(--font-mono)}
+.grow{flex:1;min-width:0}
+.row{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.between{justify-content:space-between}
+.note{font-size:12.5px;color:var(--muted)}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--line-2);background:var(--surface);color:var(--ink);border-radius:10px;padding:9px 14px;font-weight:600;font-size:14px;cursor:pointer;line-height:1.2;text-align:center}
+.btn:hover{background:var(--surface-2)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover{background:var(--accent-2);border-color:var(--accent-2)}
+.btn.ghost{border-color:transparent;background:transparent;color:var(--accent);padding-inline:8px}
+.btn.ghost:hover{background:var(--accent-soft)}
+.btn.sm{padding:6px 10px;font-size:13px;border-radius:8px}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+
+/* baca */
+.personas{display:grid;grid-template-columns:repeat(auto-fill,minmax(148px,1fr));gap:8px}
+.persona{text-align:left;border:1px solid var(--line);background:var(--surface-2);border-radius:12px;padding:10px 12px;cursor:pointer;display:flex;flex-direction:column;gap:2px;min-width:0}
+.persona b{display:flex;align-items:center;gap:7px;font-size:15px}
+.persona span{font-size:12.5px;color:var(--muted)}
+.persona[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.story{font-size:14px;color:var(--ink-2);border-left:3px solid var(--line-2);padding-left:12px}
+.rform{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+@media (max-width:520px){.rform{grid-template-columns:minmax(0,1fr)}}
+.fld{display:flex;flex-direction:column;gap:5px;min-width:0}
+.flabel{font-size:13px;font-weight:600;color:var(--ink-2)}
+.inp{display:flex;align-items:center;border:1px solid var(--line-2);border-radius:9px;background:var(--surface);overflow:hidden;min-width:0}
+.inp input{border:0;background:transparent;padding:8px 10px;font-family:var(--font-mono);font-size:15px;width:100%;min-width:0;outline:none}
+.inp .u{font-family:var(--font-mono);font-size:12px;color:var(--muted);padding-right:10px;white-space:nowrap}
+.inp:focus-within{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.pair{display:flex;gap:6px;align-items:center}
+.pair .inp{flex:1}
+.ind{font-size:12.5px;display:flex;align-items:center;gap:6px;color:var(--ink-2);min-height:18px}
+.consent{display:flex;gap:10px;align-items:flex-start;padding:12px 14px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line);font-size:14px;cursor:pointer}
+.consent input{width:18px;height:18px;margin-top:2px;accent-color:var(--accent);flex:none}
+.verdict{display:flex;gap:14px;align-items:center;padding:14px;border-radius:12px}
+.verdict.hijau{background:var(--hijau-soft)}.verdict.kuning{background:var(--kuning-soft)}.verdict.merah{background:var(--merah-soft)}.verdict.none{background:var(--surface-2)}
+.swatch{width:66px;height:62px;border-radius:12px;display:grid;place-items:center;flex:none;font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:.04em;color:#fff}
+.swatch.hijau{background:var(--r-hijau)}.swatch.kuning{background:var(--r-kuning);color:#2B2200}.swatch.merah{background:var(--r-merah)}.swatch.none{background:var(--line-2);color:var(--ink)}
+.verdict b{font-size:16px}
+.verdict ul{margin:4px 0 0;padding-left:18px;font-size:13.5px;color:var(--ink-2)}
+.blist{display:flex;flex-direction:column;border-top:1px solid var(--line)}
+.brow{display:grid;grid-template-columns:72px minmax(0,1fr);gap:4px 14px;padding:12px 0;border-bottom:1px solid var(--line);align-items:baseline}
+.brow .k{font-family:var(--font-cond);font-weight:700;font-size:18px;line-height:1.2}
+.brow .bv{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:2px 12px;min-width:0}
+.brow .v{font-family:var(--font-mono);font-size:15px;font-weight:600;white-space:nowrap}
+.brow .d{font-family:var(--font-mono);font-size:12px;color:var(--muted);white-space:nowrap}
+.brow .why{grid-column:2;font-size:12.5px;line-height:1.45;color:var(--muted)}
+.brow .why.t{color:var(--warn)}
+.refer{border:1px solid var(--r-merah);background:var(--merah-soft);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:8px}
+.refer b{color:var(--bad)}
+.code{font-family:var(--font-mono);font-size:20px;letter-spacing:.14em;font-weight:600}
+
+/* temu */
+.temu{display:grid;grid-template-columns:minmax(0,1fr) 390px;gap:16px;align-items:start}
+.temu-main{display:flex;flex-direction:column;gap:16px;min-width:0}
+.temu-side{position:sticky;top:calc(env(safe-area-inset-top,0px) + 12px);min-width:0}
+@media (max-width:900px){.temu{grid-template-columns:minmax(0,1fr)}.temu-side{position:static;order:-1}}
+.scan{display:grid;grid-template-columns:164px minmax(0,1fr);gap:20px;align-items:center}
+@media (max-width:520px){.scan{grid-template-columns:minmax(0,1fr);justify-items:start}}
+.qr{position:relative;width:164px;max-width:100%;aspect-ratio:1;background:#FFFFFF;border-radius:12px;padding:12px;border:1px solid var(--line)}
+.qr svg{width:100%;height:100%;display:block}
+.qr .tag{position:absolute;left:50%;bottom:-11px;transform:translateX(-50%);background:var(--accent);color:var(--accent-ink);font-family:var(--font-cond);font-weight:700;font-size:12px;letter-spacing:.08em;padding:2px 8px;border-radius:5px;white-space:nowrap}
+.laser{position:absolute;left:8px;right:8px;height:3px;background:#E0352B;box-shadow:0 0 10px #E0352B;top:12px;animation:laser .55s ease-in-out infinite alternate;border-radius:2px}
+@keyframes laser{to{top:calc(100% - 15px)}}
+.scan-col{display:flex;flex-direction:column;gap:8px;align-items:flex-start}
+.table-head{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between}
+.recos{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:10px}
+.reco{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:8px;background:var(--surface-2);min-width:0}
+.reco h4{font-family:var(--font-cond);font-size:18px;font-weight:700}
+.reco .why{font-size:12.5px;color:var(--muted);margin-top:-6px}
+.reco ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:5px;font-size:13.5px}
+.reco li{display:flex;gap:8px;align-items:center;min-width:0}
+.reco li .nl{width:20px;height:20px;font-size:14px;border-radius:5px}
+.reco .sum{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);line-height:1.5}
+.reco .btn{margin-top:auto}
+.demand{font-size:13px;padding:10px 12px;border-radius:10px;background:var(--warn-soft);color:var(--warn)}
+.compare{font-size:14px;padding:12px 14px;border-radius:10px;background:var(--accent-soft);color:var(--ink)}
+.legend-nl{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12.5px;color:var(--ink-2);align-items:center}
+.legend-nl span{display:inline-flex;gap:6px;align-items:center}
+.legend-nl .nl{width:20px;height:20px;font-size:14px}
+.mgroups{display:flex;flex-direction:column;gap:14px}
+.mgroup{display:flex;flex-direction:column;gap:6px}
+.mgroup h4{font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
+.mitem{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:10px;align-items:center;width:100%;text-align:left;border:1px solid var(--line);background:var(--surface);border-radius:10px;padding:9px 12px;cursor:pointer}
+.mitem:hover{border-color:var(--line-2);background:var(--surface-2)}
+.mitem[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);box-shadow:inset 0 0 0 1px var(--accent)}
+.mitem .nm{font-weight:600;font-size:14.5px;display:block}
+.mitem .pr{font-size:12px;color:var(--muted);display:block}
+.tray-card{gap:14px}
+.tray-wrap svg{width:100%;height:auto;display:block}
+.comp{cursor:pointer}
+.comp:focus-visible{outline:none}
+.comp:focus-visible .cbox{stroke:var(--accent);stroke-width:3.5}
+.stamp-anim{transform-box:fill-box;transform-origin:center;animation:stamp .5s cubic-bezier(.2,1.4,.4,1) both}
+@keyframes stamp{from{transform:scale(1.5);opacity:0}to{transform:scale(1);opacity:1}}
+.tverdict{font-size:14px;font-weight:600;padding:10px 12px;border-radius:10px}
+.tverdict.good{background:var(--good-soft);color:var(--good)}.tverdict.bad{background:var(--bad-soft);color:var(--bad)}.tverdict.none{background:var(--surface-2);color:var(--muted);font-weight:500}
+.meters{display:flex;flex-direction:column;gap:10px}
+.meter{display:grid;grid-template-columns:56px minmax(0,1fr) 116px;gap:10px;align-items:center}
+.meter .k{font-family:var(--font-cond);font-weight:700;font-size:16px}
+.track{position:relative;height:10px;background:var(--surface-2);border:1px solid var(--line);border-radius:5px}
+.fill{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;transition:width .35s ease}
+.fill.ok{background:var(--good)}.fill.mid{background:var(--warn-bar)}.fill.over{background:var(--bad)}
+.lim{position:absolute;top:-4px;bottom:-4px;width:2px;background:var(--ink);left:66.667%;border-radius:1px}
+.meter .v{font-family:var(--font-mono);font-size:12px;color:var(--ink-2);white-space:nowrap;text-align:right;font-variant-numeric:tabular-nums}
+.meter .v b{color:var(--ink);font-weight:600}
+.swap{display:flex;gap:10px;align-items:center;justify-content:space-between;flex-wrap:wrap;font-size:13.5px;padding:10px 12px;border:1px dashed var(--line-2);border-radius:10px}
+
+/* riwayat */
+.weeks{display:flex;flex-direction:column;gap:10px}
+.wk{display:grid;grid-template-columns:70px repeat(5,minmax(0,1fr));gap:6px;align-items:stretch}
+.wk .wl{font-family:var(--font-cond);font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);align-self:center}
+.day{border:1px solid var(--line);border-radius:10px;padding:8px 4px;display:flex;flex-direction:column;align-items:center;gap:4px;font-size:12px;min-width:0;background:var(--surface)}
+.day .ic{width:30px;height:20px;border-radius:5px;display:grid;place-items:center;color:#fff;font-weight:700;font-size:12px}
+.day.fit .ic{background:var(--good)}.day.miss .ic{background:var(--bad)}.day.todo .ic{border:1.5px dashed var(--line-2);color:var(--muted)}
+.day .m{font-family:var(--font-mono);font-size:10.5px;color:var(--accent);font-weight:600;min-height:14px}
+.day.today{border-color:var(--accent)}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+@media (max-width:520px){.stats{grid-template-columns:minmax(0,1fr)}}
+.stat{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:2px}
+.stat .n{font-size:24px;font-weight:700;line-height:1.15}
+.stat .l{font-size:12.5px;color:var(--muted)}
+.feedback{font-size:14.5px;line-height:1.6;padding:14px;border-radius:12px;background:var(--surface-2);border:1px solid var(--line)}
+.who{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.who-row{display:grid;grid-template-columns:120px minmax(0,1fr);gap:12px;padding:12px 0;border-bottom:1px solid var(--line)}
+@media (max-width:480px){.who-row{grid-template-columns:minmax(0,1fr);gap:4px}}
+.who-row .k{font-family:var(--font-cond);font-weight:700;font-size:17px}
+.who-row .v{font-size:14px;color:var(--ink-2)}
+.who-row .v .mono{color:var(--ink)}
+
+/* nilai */
+.form{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.form .full{grid-column:1/-1}
+@media (max-width:520px){.form{grid-template-columns:minmax(0,1fr)}}
+.tx{width:100%;border:1px solid var(--line-2);border-radius:9px;padding:9px 10px;font-size:14px;background:var(--surface);min-width:0}
+textarea.tx{min-height:92px;resize:vertical;line-height:1.45}
+.tx:focus{outline:none;border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.ai-zone{display:flex;flex-direction:column;gap:8px}
+.ai-status{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:center}
+.ai-status .dot{width:8px;height:8px}
+.ai-status.on .dot{background:var(--good)}.ai-status.off .dot{background:var(--line-2)}.ai-status.wait .dot{background:var(--warn-bar)}
+.ai-msg{font-size:13px;color:var(--bad)}
+.est{border:1px solid var(--line);border-radius:12px;padding:14px;display:flex;flex-direction:column;gap:14px;background:var(--surface-2)}
+.est-head{display:flex;gap:12px;align-items:center}
+.est-head .nl{width:46px;height:46px;font-size:30px;border-radius:10px}
+.est-head b{font-size:16px}
+.ranges{display:flex;flex-direction:column;gap:8px}
+.range{display:grid;grid-template-columns:62px minmax(0,1fr) 138px;gap:10px;align-items:center;font-size:13px}
+.range .lbl{font-family:var(--font-cond);font-weight:700;font-size:15px}
+.range .val{font-family:var(--font-mono);font-size:11.5px;color:var(--ink-2);text-align:right;white-space:nowrap}
+@media (max-width:480px){.range{grid-template-columns:54px minmax(0,1fr)}.range .val{grid-column:2;text-align:left}}
+.rtrack{position:relative;height:12px;background:var(--surface);border:1px solid var(--line);border-radius:4px}
+.rtrack .zone{position:absolute;top:0;bottom:0;opacity:.28}
+.rtrack .band{position:absolute;top:2px;bottom:2px;background:var(--accent);opacity:.35;border-radius:3px}
+.rtrack .mid{position:absolute;top:-4px;bottom:-4px;width:3px;margin-left:-1.5px;background:var(--accent);border-radius:2px}
+.rscale{display:grid;grid-template-columns:62px minmax(0,1fr) 138px;gap:10px;font-size:11px;color:var(--muted)}
+@media (max-width:480px){.rscale{grid-template-columns:54px minmax(0,1fr)}.rscale .sp2{display:none}}
+.rscale .ticks{position:relative;height:14px}
+.rscale .ticks span{position:absolute;transform:translateX(-50%);font-family:var(--font-cond);font-weight:700;font-size:12.5px}
+.stab{font-size:13.5px;padding:10px 12px;border-radius:10px}
+.stab.good{background:var(--good-soft);color:var(--good)}.stab.warn{background:var(--warn-soft);color:var(--warn)}
+.q-list{display:flex;flex-direction:column;gap:10px}
+.q{border:1px solid var(--line);border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.q-head{display:flex;gap:10px;align-items:flex-start}
+.q-head b{display:block}
+.pipe{display:flex;flex-wrap:wrap;gap:4px;align-items:center;font-size:12px}
+.pipe span{padding:3px 8px;border-radius:6px;background:var(--surface-2);color:var(--muted);border:1px solid var(--line)}
+.pipe span.on{background:var(--accent-soft);color:var(--accent);border-color:transparent;font-weight:700}
+.pipe span.done{color:var(--good);border-color:transparent;background:var(--good-soft)}
+.pipe i{color:var(--muted);font-style:normal}
+.flags{display:flex;flex-wrap:wrap;gap:6px}
+.flag{font-size:12px;font-weight:700;color:var(--warn);background:var(--warn-soft);padding:2px 8px;border-radius:6px}
+.nums{font-family:var(--font-mono);font-size:12px;color:var(--ink-2)}
+.ed{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+@media (max-width:520px){.ed{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.ed label{display:flex;flex-direction:column;gap:3px;font-size:12px;color:var(--ink-2);font-weight:600}
+.ed input{width:100%;border:1px solid var(--line-2);border-radius:8px;padding:7px 8px;font-family:var(--font-mono);font-size:13.5px;background:var(--surface);min-width:0}
+.tbl-wrap{overflow-x:auto;margin-inline:-4px}
+table{border-collapse:collapse;width:100%;font-size:13.5px}
+th,td{text-align:left;padding:9px 10px;border-bottom:1px solid var(--line);vertical-align:middle}
+th{font-family:var(--font-cond);font-weight:700;letter-spacing:.06em;text-transform:uppercase;font-size:12.5px;color:var(--muted);white-space:nowrap}
+td.num,th.num{text-align:right;font-family:var(--font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+td .sub{display:block;font-size:12px;color:var(--muted)}
+tr.off td{color:var(--muted)}
+.sw{position:relative;display:inline-block;width:40px;height:22px;flex:none}
+.sw input{opacity:0;width:100%;height:100%;margin:0;position:absolute;inset:0;cursor:pointer;z-index:1}
+.sw span{position:absolute;inset:0;background:var(--line-2);border-radius:999px;transition:background .2s;pointer-events:none}
+.sw span::after{content:'';position:absolute;top:3px;left:3px;width:16px;height:16px;border-radius:50%;background:#fff;transition:transform .2s}
+.sw input:checked+span{background:var(--accent)}
+.sw input:checked+span::after{transform:translateX(18px)}
+.sw input:focus-visible+span{outline:2px solid var(--accent);outline-offset:2px}
+.tag-new{font-size:11px;font-weight:700;color:var(--accent);background:var(--accent-soft);padding:1px 6px;border-radius:5px;margin-left:6px;white-space:nowrap}
+
+/* dasbor */
+.filters{display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin-bottom:16px}
+.filters label{font-weight:600;font-size:14px}
+.filters select{max-width:100%;width:auto}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-bottom:16px}
+.tile{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:14px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
+.tile .lab{font-size:12.5px;color:var(--muted);font-weight:600}
+.tile .num{font-size:32px;font-weight:700;line-height:1.1;letter-spacing:-.01em}
+.tile .sub{font-size:12.5px;color:var(--ink-2)}
+.bullet{position:relative;height:30px;margin-block:26px 28px}
+.bullet .bg{position:absolute;left:0;right:0;top:8px;bottom:8px;background:var(--surface-2);border:1px solid var(--line);border-radius:4px}
+.bullet .val{position:absolute;left:0;top:8px;bottom:8px;background:var(--accent);border-radius:0 4px 4px 0;transition:width .4s}
+.bullet .tgt{position:absolute;top:0;bottom:0;width:2px;margin-left:-1px;background:var(--ink)}
+.bullet .tl{position:absolute;top:-22px;font-size:12px;font-weight:600;white-space:nowrap}
+.bullet .vl{position:absolute;bottom:-24px;font-size:12px;font-weight:600;white-space:nowrap;color:var(--accent)}
+.bullet .ax{position:absolute;bottom:-24px;font-size:11px;color:var(--muted)}
+.formula{font-family:var(--font-mono);font-size:13.5px;padding:10px 12px;border-radius:10px;background:var(--surface-2);border:1px solid var(--line)}
+.opts{display:flex;flex-direction:column;gap:8px}
+.opt{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
+.opt .t{display:flex;align-items:center;gap:6px;flex-wrap:wrap;font-weight:600;font-size:14px}
+.opt .t .nl{width:20px;height:20px;font-size:14px}
+.opt-r{display:flex;gap:10px;align-items:center}
+.stackbar{display:flex;gap:2px;height:34px;border-radius:6px;overflow:hidden}
+.stackbar .sg{display:grid;place-items:center;font-family:var(--font-cond);font-weight:700;font-size:15px;min-width:0;transition:flex-grow .4s}
+.stack-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2)}
+.stack-legend span{display:inline-flex;gap:6px;align-items:center}
+.stack-legend .nl{width:18px;height:18px;font-size:13px;border-radius:4px}
+.rbars{display:flex;flex-direction:column;gap:12px}
+.rbar{display:grid;grid-template-columns:140px minmax(0,1fr) 120px;gap:10px;align-items:center;font-size:13.5px}
+.rbar .rv{font-family:var(--font-mono);font-size:12.5px;text-align:right;white-space:nowrap}
+@media (max-width:560px){.rbar{grid-template-columns:minmax(0,1fr) auto}.rbar .trk{grid-column:1/-1;grid-row:2}}
+.trk{height:12px;background:var(--surface-2);border-radius:4px;position:relative;border:1px solid var(--line)}
+.trk i{position:absolute;left:0;top:0;bottom:0;border-radius:0 4px 4px 0;background:var(--s-ctx)}
+.trk i.top{background:var(--accent)}
+.trk.hid{background:repeating-linear-gradient(45deg,var(--surface-2) 0 6px,var(--line) 6px 8px)}
+.lock{font-size:12.5px;color:var(--muted);display:flex;gap:6px;align-items:flex-start}
+.plan{display:flex;flex-direction:column;gap:0;border-top:1px solid var(--line)}
+.plan-row{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:4px 12px;padding:10px 0;border-bottom:1px solid var(--line);font-size:14px}
+.plan-row .v{font-family:var(--font-mono);font-weight:600;white-space:nowrap}
+.plan-row .s{grid-column:1/-1;font-size:12.5px;color:var(--muted)}
+.big-plan{font-size:15px;line-height:1.55}
+.big-plan b{font-family:var(--font-mono)}
+.chart{position:relative}
+.chart svg{display:block;width:100%;height:auto;overflow:visible}
+.chart svg:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:6px}
+.tt{position:absolute;pointer-events:none;background:var(--surface);border:1px solid var(--line-2);border-radius:8px;padding:8px 10px;font-size:12.5px;box-shadow:var(--shadow);white-space:nowrap;z-index:2}
+.tt b{display:block;margin-bottom:2px}
+.tt .r{display:flex;gap:8px;align-items:center;justify-content:space-between}
+.tt .r span{display:inline-flex;gap:6px;align-items:center}
+.lg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink-2)}
+.lg span{display:inline-flex;align-items:center;gap:7px}
+.lg i{display:inline-block;width:16px;height:3px;border-radius:2px}
+
+/* mobile bar + toast */
+.mbar{position:fixed;left:0;right:0;bottom:0;z-index:20;background:var(--surface);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom,0px));display:flex;gap:10px;align-items:center;box-shadow:0 -6px 18px rgba(0,0,0,.08)}
+.mbar .mi{flex:1;min-width:0;display:flex;flex-direction:column;font-size:12.5px;line-height:1.3}
+.mbar .mi b{font-size:13.5px}
+.mbar .mi span{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media (min-width:901px){.mbar{display:none!important}}
+@media (max-width:900px){body.has-mbar{padding-block-end:96px}}
+.toast{position:fixed;left:50%;bottom:calc(24px + env(safe-area-inset-bottom,0px));transform:translate(-50%,20px);background:var(--ink);color:var(--bg);padding:10px 16px;border-radius:10px;font-size:14px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:30;width:max-content;max-width:calc(100% - 32px);text-align:center}
+.toast.show{opacity:1;transform:translate(-50%,0)}
+@media (max-width:900px){body.has-mbar .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px))}}
+
+/* about */
+.about{margin-top:28px;border-top:1px solid var(--line);padding-top:18px;display:flex;flex-direction:column;gap:12px;color:var(--ink-2);font-size:13.5px}
+.about details{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.about summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.about ul,.about ol{margin:10px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:6px}
+.refs a{word-break:break-all}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}}
+</style>
+
+<div class="app">
+  <header class="top" id="top"></header>
+  <div class="strip" id="strip" aria-live="polite"></div>
+  <nav class="tabs" id="tabs" role="tablist" aria-label="Modul SANGU"></nav>
+  <main id="view"></main>
+  <footer class="about" id="about"></footer>
+</div>
+<div class="mbar" id="mbar" hidden></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+(function(){
+'use strict';
+const $=(s,r)=>(r||document).querySelector(s);
+const esc=s=>String(s==null?'':s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const fmt=(n,d)=>Number(n).toLocaleString('id-ID',{minimumFractionDigits:d||0,maximumFractionDigits:d||0});
+const fmtV=n=>{const r=Math.round(n*10)/10;return Math.abs(r-Math.round(r))<0.05?fmt(Math.round(r)):fmt(r,1);};
+const REDUCED=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+/* ---------- acuan ---------- */
+const DAILY={g:50,na:2000,l:67};            // Permenkes 30/2013
+const MEAL=0.4;                             // makan siang = 40% kebutuhan harian (asumsi prototipe)
+const GALAT=0.383;                          // Shonkoff dkk. (2023)
+const KOMP=[
+  {id:'karbo',label:'Nasi',st:'NASI'},
+  {id:'lauk',label:'Lauk',st:'LAUK'},
+  {id:'sayur',label:'Sayur',st:'SAYUR'},
+  {id:'buah',label:'Buah',st:'BUAH'},
+  {id:'ekstra',label:'Pelengkap',st:'EKSTRA'},
+  {id:'minum',label:'Minum',st:'MINUM'}
+];
+const KB=Object.fromEntries(KOMP.map(k=>[k.id,k]));
+const DRV={na:'natrium',g:'gula',l:'lemak'};
+const NUT=[{k:'na',label:'Garam',unit:'mg'},{k:'g',label:'Gula',unit:'g'},{k:'l',label:'Lemak',unit:'g'},{k:'e',label:'Energi',unit:'kkal'}];
+const M=(id,nama,kat,porsi,e,g,na,l,status,aktif)=>({id,nama,kat,porsi,e,g,na,l,status,aktif});
+const SEED_MENU=[
+  M('nasi-putih','Nasi putih','karbo','150 g',195,0,2,0.4,'lab',true),
+  M('nasi-merah','Nasi merah','karbo','150 g',165,0.5,5,1.2,'lab',false),
+  M('kentang-rebus','Kentang rebus','karbo','150 g',130,1,10,0.2,'ahli',false),
+  M('nasi-goreng','Nasi goreng kampung','karbo','250 g',420,5,950,16,'lab',true),
+  M('ayam-goreng','Ayam goreng tepung','lauk','1 potong, 110 g',320,1,480,18,'lab',true),
+  M('ayam-bakar','Ayam bakar kecap','lauk','1 potong, 110 g',250,8,540,11,'lab',true),
+  M('pepes-ikan','Pepes ikan kembung','lauk','1 bungkus, 100 g',170,1,330,7,'lab',true),
+  M('tempe-bacem','Tempe bacem','lauk','2 potong, 60 g',180,9,380,8,'ahli',true),
+  M('telur-balado','Telur balado','lauk','1 butir',150,4,420,11,'ahli',true),
+  M('rendang','Rendang daging','lauk','70 g',290,3,520,21,'lab',true),
+  M('perkedel','Perkedel kentang','lauk','2 buah, 80 g',160,1,300,8,'ahli',true),
+  M('tahu-kukus','Tahu kukus isi sayur','lauk','2 buah, 100 g',110,1,180,4,'lab',false),
+  M('sayur-asem','Sayur asem','sayur','1 mangkuk, 200 g',70,5,380,0.5,'lab',true),
+  M('sayur-lodeh','Sayur lodeh','sayur','1 mangkuk, 200 g',160,3,450,12,'lab',true),
+  M('tumis-kangkung','Tumis kangkung','sayur','100 g',90,1,290,6,'lab',true),
+  M('lalapan','Lalapan segar','sayur','80 g',20,1,8,0.2,'ahli',false),
+  M('pepaya','Pepaya potong','buah','150 g',60,8,5,0.2,'lab',true),
+  M('jeruk','Jeruk manis','buah','1 buah, 120 g',55,9,2,0.1,'ahli',false),
+  M('kerupuk','Kerupuk udang','ekstra','20 g',95,1,240,5,'ahli',true),
+  M('sambal','Sambal terasi','ekstra','1 sdm',35,1,420,2.5,'lab',true),
+  M('mendoan','Tempe mendoan','ekstra','2 potong',210,1,450,14,'ahli',true),
+  M('bakwan','Bakwan sayur','ekstra','1 buah',140,1,210,9,'ahli',false),
+  M('air','Air mineral','minum','600 ml',0,0,0,0,'lab',true),
+  M('teh-tawar','Teh tawar hangat','minum','250 ml',2,0,5,0,'lab',true),
+  M('es-teh','Es teh manis','minum','250 ml',100,25,5,0,'lab',true),
+  M('es-jeruk','Es jeruk','minum','250 ml',95,20,3,0.1,'lab',true),
+  Object.assign(M('soto-santan','Soto ayam santan','lauk','1 mangkuk, 300 ml',260,3,890,15,'ai',false),{src:'ai',conf:'rendah',campuran:true,alasan:'Kuah santan dan penyedap menyumbang natrium dan lemak terbesar. Isi mangkuk bervariasi antarporsi.',saran:'Pakai kaldu tanpa penyedap dan santan encer.'}),
+  Object.assign(M('capcay','Capcay kuah','sayur','1 mangkuk, 200 g',110,4,520,5,'ai',false),{src:'ai',conf:'sedang',campuran:true,alasan:'Saus tiram dan garam menjadi sumber natrium utama.',saran:'Kurangi saus tiram separuh dan tambah bawang putih.'})
+];
+const REFORM={
+  'sayur-lodeh':{how:'Santan encer separuh, garam dikurangi sepertiga',e:120,na:320,l:7},
+  'telur-balado':{how:'Bumbu balado tanpa penyedap, garam dikurangi',na:290},
+  'ayam-bakar':{how:'Separuh kecap diganti bawang dan jahe',g:4,na:360},
+  'mendoan':{how:'Goreng sebentar lalu tiriskan, adonan tanpa penyedap',na:300,l:9,e:170},
+  'sambal':{how:'Terasi dan garam dipangkas, tomat ditambah',na:250},
+  'ayam-goreng':{how:'Dipanggang dengan tepung tipis, tanpa penyedap',e:240,na:340,l:9},
+  'rendang':{how:'Porsi 50 g dan minyak kuah dibuang',e:210,na:380,l:13},
+  'es-teh':{how:'Gula dikurangi separuh, gula cair disediakan terpisah',g:10,e:40},
+  'es-jeruk':{how:'Tanpa sirup, gula satu sendok teh',g:9,e:45},
+  'nasi-goreng':{how:'Kecap asin dan garam dikurangi, sayur ditambah',na:620,l:12}
+};
+const PERSONAS={
+  rina:{nama:'Rina',peran:'Operator jahit',sex:'P',usia:34,sis:132,dia:86,gds:118,imt:24.1,lp:79,cerita:'Rapor kuning karena prahipertensi. Biasa memilih ayam goreng tepung dan sambal supaya kuat lembur.'},
+  dimas:{nama:'Dimas',peran:'Operator forklift',sex:'L',usia:41,sis:128,dia:84,gds:156,imt:28.4,lp:97,cerita:'Empat indikator kuning. Gula, garam, dan lemak sama-sama perlu dijaga.'},
+  sari:{nama:'Sari',peran:'Staf QC',sex:'P',usia:27,sis:112,dia:74,gds:96,imt:21.8,lp:72,cerita:'Semua indikator hijau. Batas gizinya mengikuti anjuran umum.'},
+  harun:{nama:'Pak Harun',peran:'Mandor produksi',sex:'L',usia:52,sis:152,dia:96,gds:212,imt:26.2,lp:94,cerita:'Rapor merah. SANGU membuat rujukan dan menyempitkan pilihan nampan.'}
+};
+const HABIT={karbo:'nasi-putih',lauk:'ayam-goreng',sayur:'sayur-lodeh',buah:null,ekstra:'sambal',minum:'es-teh'};
+const WF={
+  demak:{nama:'PT X, Kabupaten Demak',total:1725,sumber:'Ardiansyah dan Widowati (2024)',groups:[{id:'ob',label:'Obesitas',pct:51},{id:'ht',label:'Hipertensi',pct:39.1}],note:'Gula darah tidak dilaporkan pada sumber.'},
+  asn:{nama:'PNS, TNI, Polri, dan pegawai BUMN',total:null,sumber:'BKPK (2024), SKI 2023',groups:[{id:'ob',label:'Obesitas',pct:32}],note:'Angka nasional. Contoh ini hanya memakai obesitas.'},
+  gudang:{nama:'Unit Gudang (simulasi)',total:38,sumber:'Data simulasi',groups:[{id:'ob',label:'Obesitas',n:21},{id:'ht',label:'Hipertensi',n:12},{id:'gd',label:'Gula darah tinggi',n:7}],note:'Kelompok di bawah 20 orang disembunyikan dari kantin.'}
+};
+const TREND={days:['Sen','Sel','Rab','Kam','Jum'],before:[38,41,36,40,39],withS:[46,49,53,55]};
+const HIST=[
+  {w:1,d:'Sen',fit:false,m:false,na:148},{w:1,d:'Sel',fit:false,m:false,na:131},{w:1,d:'Rab',fit:true,m:false,na:92},{w:1,d:'Kam',fit:true,m:false,na:88},{w:1,d:'Jum',fit:false,m:false,na:124},
+  {w:2,d:'Sen',fit:true,m:false,na:85},{w:2,d:'Sel',fit:true,m:true,na:79},{w:2,d:'Rab',fit:true,m:true,na:90},{w:2,d:'Kam',fit:false,m:false,na:112}
+];
+const DEFAULT_FORM={nama:'Opor ayam',kat:'lauk',porsi:'1 potong paha dan kuah 150 ml',gram:240,bahan:'Ayam 90 g, santan kental 100 ml, bawang merah 4 siung, bawang putih 2 siung, kemiri 3 butir, garam 1 sdt, gula pasir 1 sdt, minyak goreng 1 sdm'};
+
+/* ---------- state ---------- */
+const KEY='sangu-proto-v1';
+const emptyTray=()=>({karbo:null,lauk:null,sayur:null,buah:null,ekstra:null,minum:null});
+function defaultState(){
+  const s={v:1,role:'pekerja',tab:{pekerja:'baca',kantin:'nilai'},persona:'rina',rapor:Object.assign({},PERSONAS.rina),consent:true,
+    scanned:false,tray:emptyTray(),usedReco:false,today:null,menu:SEED_MENU.map(x=>Object.assign({},x)),
+    wf:'demak',purch:{A:140,B:196,C:188,D:76},demand:{},form:Object.assign({},DEFAULT_FORM),est:null,refCode:null};
+  s.est=localEstimate(s.form);
+  return s;
+}
+function load(){try{const raw=localStorage.getItem(KEY);if(!raw)return null;const o=JSON.parse(raw);if(o&&o.v===1)return Object.assign(defaultState(),o);}catch(e){}return null;}
+let S=load()||defaultState();
+const T={scanning:false,stampAnim:false,aiState:'wait',aiBusy:false,aiMsg:'',editing:null,table:false,hover:null};
+let saveT;
+function save(){clearTimeout(saveT);saveT=setTimeout(()=>{try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}},250);}
+
+/* ---------- logika ---------- */
+const byId=id=>S.menu.find(x=>x.id===id);
+const isValid=it=>it&&(it.status==='lab'||it.status==='ahli');
+const activeMenu=()=>S.menu.filter(it=>it.aktif&&isValid(it));
+function levelOf(it){
+  const p={g:it.g/DAILY.g*100,na:it.na/DAILY.na*100,l:it.l/DAILY.l*100};
+  const mx=Math.max(p.g,p.na,p.l);
+  const drv=(p.na>=p.g&&p.na>=p.l)?'na':(p.g>=p.l?'g':'l');
+  const L=mx<=10?'A':mx<=20?'B':mx<=35?'C':'D';
+  return {L,mx,drv,p};
+}
+const nl=(L,prov)=>`<span class="nl nl-${L}${prov?' prov':''}" title="Nutri-Level ${L}${prov?' sementara':''}">${L}</span>`;
+const RANK={hijau:0,kuning:1,merah:2};
+const worst=(...c)=>c.reduce((a,b)=>RANK[b]>RANK[a]?b:a,'hijau');
+const CLAMP={usia:[18,80],sis:[70,250],dia:[40,150],gds:[40,600],imt:[12,60],lp:[40,200]};
+function R(){const r=Object.assign({},S.rapor);for(const k in CLAMP){let v=Number(r[k]);if(!isFinite(v))v=PERSONAS.sari[k];r[k]=Math.min(CLAMP[k][1],Math.max(CLAMP[k][0],v));}if(r.sex!=='L')r.sex='P';return r;}
+function evalRapor(r){
+  const td=(r.sis>=140||r.dia>=90)?{c:'merah',t:'Hipertensi'}:(r.sis>=120||r.dia>=80)?{c:'kuning',t:'Prahipertensi'}:{c:'hijau',t:'Normal'};
+  const gd=r.gds>=200?{c:'merah',t:'Tinggi'}:r.gds>=140?{c:'kuning',t:'Di atas normal'}:{c:'hijau',t:'Normal'};
+  const imt=r.imt<18.5?{c:'kuning',t:'Kurus'}:r.imt<=25?{c:'hijau',t:'Normal'}:r.imt<=27?{c:'kuning',t:'Berat badan lebih'}:r.imt<30?{c:'kuning',t:'Obesitas'}:{c:'merah',t:'Obesitas, IMT 30 ke atas'};
+  const lpLim=r.sex==='L'?90:80;
+  const lp=r.lp>lpLim?{c:'kuning',t:'Obesitas sentral'}:{c:'hijau',t:'Normal'};
+  return {td,gd,imt,lp,lpLim,overall:worst(td.c,gd.c,imt.c,lp.c)};
+}
+const AKG={L:[[29,2650],[49,2550],[64,2150],[200,1800]],P:[[29,2250],[49,2150],[64,1800],[200,1550]]};
+function akg(sex,u){for(const [mx,v] of AKG[sex])if(u<=mx)return v;return 1800;}
+const mealOf=d=>({na:Math.round(d.na*MEAL/10)*10,g:Math.round(d.g*MEAL*10)/10,l:Math.round(d.l*MEAL*10)/10,e:Math.round(d.e*MEAL/10)*10});
+function budgetOf(){
+  if(!S.consent){
+    const d={na:2000,g:50,l:67,e:2250};
+    return {general:true,daily:d,meal:mealOf(d),why:{na:'Batas umum karena rapor belum dibaca',g:'Batas umum',l:'Batas umum',e:'AKG umum perempuan dewasa'},tight:{}};
+  }
+  const r=R(),ev=evalRapor(r);
+  const na={hijau:2000,kuning:1800,merah:1500}[ev.td.c];
+  const g={hijau:50,kuning:37.5,merah:25}[ev.gd.c];
+  const bc=worst(ev.imt.c,ev.lp.c);
+  const l={hijau:67,kuning:55,merah:45}[bc];
+  let e=akg(r.sex,r.usia),adj='';
+  if(r.imt<18.5){e+=300;adj=', ditambah 300 kkal karena IMT rendah';}
+  else if(ev.imt.c==='merah'){e-=500;adj=', dikurangi 500 kkal karena obesitas';}
+  else if(r.imt>25){e-=300;adj=', dikurangi 300 kkal karena berat badan lebih';}
+  const why={
+    na:ev.td.c==='hijau'?'Batas umum, setara garam di bawah 5 g per hari':ev.td.c==='kuning'?'Diperketat 10% karena tekanan darah kuning':'Diperketat 25% karena tekanan darah merah',
+    g:ev.gd.c==='hijau'?'Batas umum 50 g per hari':ev.gd.c==='kuning'?'Diperketat 25% karena gula darah kuning':'Diperketat 50% karena gula darah merah',
+    l:bc==='hijau'?'Batas umum 67 g per hari':bc==='kuning'?'Diperketat 18% karena IMT atau lingkar perut kuning':'Diperketat 33% karena IMT merah',
+    e:`AKG ${r.sex==='L'?'laki-laki':'perempuan'} ${r.usia} tahun${adj}`
+  };
+  const d={na,g,l,e};
+  return {general:false,ev,daily:d,meal:mealOf(d),why,tight:{na:ev.td.c!=='hijau',g:ev.gd.c!=='hijau',l:bc!=='hijau',e:!!adj}};
+}
+function fitOf(it,b){const s=Math.max(it.na/b.na,it.g/b.g,it.l/b.l,it.e/b.e)*100;return {s,k:s<=50?'cocok':s<=80?'batasi':'hindari'};}
+const PB={cocok:['Cocok','✓'],batasi:['Batasi','!'],hindari:['Hindari','✕']};
+const pb=k=>`<span class="pb ${k}"><span aria-hidden="true">${PB[k][1]}</span>${PB[k][0]}</span>`;
+function sanitizeTray(){for(const k of KOMP){const id=S.tray[k.id];if(id){const it=byId(id);if(!it||!it.aktif||!isValid(it)||it.kat!==k.id)S.tray[k.id]=null;}}}
+const trayList=t=>KOMP.map(k=>t[k.id]).filter(Boolean).map(byId).filter(Boolean);
+const sumOf=list=>list.reduce((a,it)=>({na:a.na+it.na,g:a.g+it.g,l:a.l+it.l,e:a.e+it.e}),{na:0,g:0,l:0,e:0});
+const useOf=(t,b)=>({na:t.na/b.na*100,g:t.g/b.g*100,l:t.l/b.l*100,e:t.e/b.e*100});
+const okU=u=>u.na<=100&&u.g<=100&&u.l<=100&&u.e<=100;
+const coreOk=t=>!!(t.karbo&&t.lauk&&t.sayur);
+const sameTray=(a,b)=>!!a&&!!b&&KOMP.every(k=>(a[k.id]||null)===(b[k.id]||null));
+function recommend(b){
+  const A=activeMenu();const by=k=>A.filter(x=>x.kat===k);
+  const K=by('karbo'),L=by('lauk'),V=by('sayur'),F=[null].concat(by('buah')),D=[null].concat(by('minum'));
+  const out=[];
+  for(const k of K)for(const l of L)for(const v of V)for(const f of F)for(const d of D){
+    const list=[k,l,v,f,d].filter(Boolean);const tot=sumOf(list);const u=useOf(tot,b);
+    if(!okU(u))continue;
+    const q=list.reduce((a,it)=>a+'ABCD'.indexOf(levelOf(it).L),0);
+    out.push({tray:{karbo:k.id,lauk:l.id,sayur:v.id,buah:f?f.id:null,ekstra:null,minum:d?d.id:null},tot,u,mx:Math.max(u.na,u.g,u.l,u.e),q,pref:(f?0:8)+(d?0:5),lauk:l.id});
+  }
+  const sig=c=>JSON.stringify(c.tray);const used=new Set();const picks=[];
+  const pick=(arr,title,why)=>{const c=arr.find(x=>!used.has(sig(x))&&!picks.some(p=>p.lauk===x.lauk))||arr.find(x=>!used.has(sig(x)));if(c){used.add(sig(c));picks.push(Object.assign({},c,{title,why}));}};
+  pick(out.slice().sort((a,b)=>(a.mx+a.pref+a.q*2)-(b.mx+b.pref+b.q*2)),'Paling seimbang','Tidak ada zat gizi yang mepet batas');
+  pick(out.slice().sort((a,b)=>(a.u.na+a.pref)-(b.u.na+b.pref)),'Paling ringan garam','Natrium terendah untuk rapor ini');
+  pick(out.slice().sort((a,b)=>(b.tot.e-b.pref*12)-(a.tot.e-a.pref*12)),'Paling mengenyangkan','Energi terbesar yang masih muat');
+  return {picks,total:out.length,laukUnik:new Set(out.map(o=>o.lauk)).size};
+}
+function oneSwap(t,b){
+  const A=activeMenu();const c=[];
+  for(const k of KOMP){
+    const cur=t[k.id];if(!cur)continue;
+    const alts=A.filter(x=>x.kat===k.id&&x.id!==cur).map(x=>x.id);
+    if(['buah','ekstra','minum'].includes(k.id))alts.push(null);
+    for(const a of alts){const nt=Object.assign({},t,{[k.id]:a});const u=useOf(sumOf(trayList(nt)),b);if(okU(u))c.push({k:k.id,from:cur,to:a,mx:Math.max(u.na,u.g,u.l,u.e)});}
+  }
+  c.sort((x,y)=>y.mx-x.mx);
+  return c[0]||null;
+}
+function wfGroups(){const w=WF[S.wf];return w.groups.map(g=>{const n=g.n!=null?g.n:(w.total?Math.round(w.total*g.pct/100):null);const pct=g.pct!=null?g.pct:g.n/w.total*100;return Object.assign({},g,{n,pct,hidden:n!=null&&n<20});});}
+function rnsrInfo(){
+  const act=activeMenu();const n=act.length;const cnt={A:0,B:0,C:0,D:0};act.forEach(it=>cnt[levelOf(it).L]++);
+  const ab=cnt.A+cnt.B;const pct=n?ab/n*100:0;
+  const gs=wfGroups();const vis=gs.filter(g=>!g.hidden);const top=vis.reduce((a,g)=>!a||g.pct>a.pct?g:a,null);
+  const L=top?top.pct:0;const r=L?pct/L:0;
+  return {n,cnt,ab,pct,gs,top,L,r};
+}
+function reformOf(it){
+  const lv=levelOf(it);
+  if(REFORM[it.id]){const x=REFORM[it.id];return Object.assign({},it,x);}
+  const nv=Object.assign({},it);nv[lv.drv]=Math.round(it[lv.drv]*0.65*10)/10;
+  nv.how=lv.drv==='na'?'Garam dan penyedap dikurangi sepertiga':lv.drv==='g'?'Gula tambahan dikurangi sepertiga':'Minyak dan santan dikurangi sepertiga';
+  return nv;
+}
+const liveToday=()=>{const p=S.purch;const t=p.A+p.B+p.C+p.D;return t?(p.A+p.B)/t*100:0;};
+
+/* ---------- estimator ---------- */
+function localEstimate(f){
+  const base={karbo:{e:130,g:.5,na:5,l:.5},lauk:{e:180,g:1,na:250,l:8},sayur:{e:45,g:2,na:200,l:1.5},buah:{e:45,g:8,na:3,l:.2},ekstra:{e:250,g:2,na:500,l:10},minum:{e:0,g:0,na:2,l:0}}[f.kat]||{e:150,g:2,na:200,l:5};
+  const k=(Number(f.gram)||100)/100;
+  let e=base.e*k,g=base.g*k,na=base.na*k,l=base.l*k;
+  const t=(f.nama+' '+f.bahan).toLowerCase();const hits=[];
+  const add=(re,dx,lab)=>{if(re.test(t)){e+=dx.e||0;g+=dx.g||0;na+=dx.na||0;l+=dx.l||0;hits.push(lab);}};
+  add(/goreng|minyak/,{l:7,e:65},'minyak');
+  add(/santan/,{l:7,e:60},'santan');
+  add(/kecap/,{na:220,g:4,e:15},'kecap');
+  add(/gula|sirup|madu/,{g:7,e:28},'gula');
+  add(/garam/,{na:260},'garam');
+  add(/penyedap|msg|kaldu|micin/,{na:200},'penyedap');
+  add(/terasi|sambal|petis/,{na:150},'terasi atau sambal');
+  add(/tepung/,{e:40,l:2},'tepung');
+  add(/keju|mentega|margarin/,{l:4,e:36},'mentega atau keju');
+  if(/kukus|rebus|pepes|bening|panggang/.test(t)){l*=0.7;e*=0.9;hits.push('dimasak tanpa banyak minyak');}
+  const est={e:Math.round(e),g:Math.round(g*10)/10,na:Math.round(na/5)*5,l:Math.round(l*10)/10};
+  const campuran=String(f.bahan).split(/,|\n/).filter(s=>s.trim()).length>=5||/kuah|soto|sop|gulai|opor|kari|rawon/.test(t);
+  const drv=levelOf(est).drv;
+  return Object.assign(est,{src:'lokal',conf:'rendah',campuran,
+    alasan:hits.length?'Terdeteksi '+hits.slice(0,4).join(', ')+'. Angka berasal dari rata-rata kompartemen, bukan dari resep rinci.':'Angka berasal dari rata-rata kompartemen.',
+    saran:drv==='na'?'Kurangi garam dan penyedap sepertiga, perkuat rasa dengan rempah.':drv==='g'?'Kurangi gula tambahan separuhnya.':'Ganti santan kental dengan santan encer dan kurangi minyak.'});
+}
+const scaleIt=(x,f)=>({e:x.e*f,g:x.g*f,na:x.na*f,l:x.l*f});
+function stability(x){const lo=levelOf(scaleIt(x,1-GALAT)).L,mid=levelOf(x).L,hi=levelOf(scaleIt(x,1+GALAT)).L;return {lo,mid,hi,stable:lo===hi};}
+
+/* ---------- AI (sample capability) ---------- */
+let sampleFn=null,sampleImages=false,aiCtl=null,photoFile=null;
+(async()=>{
+  try{
+    if(!window.claude||typeof window.claude.use!=='function'){T.aiState='off';refreshAI();return;}
+    const s=await window.claude.use('sample');
+    if(!s){T.aiState='off';refreshAI();return;}
+    sampleFn=s;T.aiState='on';
+    try{const caps=await s.limits();sampleImages=!!(caps&&caps.images);}catch(e){sampleImages=false;}
+    refreshAI();
+  }catch(e){T.aiState='off';refreshAI();}
+})();
+function aiPrompt(f,withPhoto){
+  return `Anda ahli gizi di Indonesia yang menaksir kandungan gizi menu kantin pabrik.
+Taksir kandungan gizi untuk SATU porsi hidangan berikut.
+Nama menu: ${f.nama}
+Sekat nampan: ${KB[f.kat].label}
+Porsi: ${f.porsi} (sekitar ${f.gram} g atau ml)
+Resep dan bahan: ${f.bahan}
+${withPhoto?'Foto hidangan terlampir. Gunakan foto untuk memperkirakan ukuran porsi dan cara masak.':''}
+Aturan:
+- gula_g adalah gula total tanpa laktosa, dalam gram.
+- natrium_mg mencakup garam, kecap, penyedap, terasi, dan bahan olahan, dalam miligram.
+- lemak_g adalah lemak total dalam gram, termasuk minyak goreng yang terserap.
+- Bila resep untuk banyak porsi, bagi sesuai ukuran satu porsi di atas.
+- keyakinan bernilai "rendah", "sedang", atau "tinggi".
+- hidangan_campuran bernilai true bila bahan bercampur atau berkuah sehingga porsi sulit ditaksir.
+- alasan paling banyak 25 kata dalam bahasa Indonesia dan menyebut bahan penyumbang terbesar.
+- saran_reformulasi paling banyak 20 kata dalam bahasa Indonesia, berisi satu perubahan resep yang paling menurunkan gula, garam, atau lemak.
+Balas hanya dengan satu objek JSON seperti contoh ini:
+{"energi_kkal": 250, "gula_g": 3, "natrium_mg": 540, "lemak_g": 11, "keyakinan": "sedang", "hidangan_campuran": false, "alasan": "Kecap dan garam menyumbang natrium terbesar.", "saran_reformulasi": "Kurangi kecap separuh dan tambah bawang putih."}`;
+}
+const AI_ERR={cancelled:'Taksiran dihentikan.',rate_limited:'Terlalu banyak permintaan. Coba lagi beberapa saat lagi.',invalid_json:'Jawaban AI tidak terbaca. Coba lagi atau perjelas bahan.',empty_completion:'AI tidak memberi jawaban. Perjelas resep lalu coba lagi.',image_rejected:'Foto tidak bisa dipakai. Coba foto JPG atau PNG lain.',refused:'AI menolak permintaan ini. Ubah deskripsi menu.',session_expired:'Sesi Claude berakhir. Masuk lagi, lalu coba ulang.',prompt_too_large:'Resep terlalu panjang. Ringkas daftar bahan.'};
+async function runAI(){
+  if(!sampleFn||T.aiBusy)return;
+  const f=S.form;
+  if(!String(f.nama).trim()||!String(f.bahan).trim()){T.aiMsg='Isi nama menu dan bahan dulu.';refreshAI();return;}
+  aiCtl=new AbortController();T.aiBusy=true;T.aiMsg='';refreshAI();
+  const usePhoto=!!(photoFile&&sampleImages);
+  try{
+    const opts={modelTier:'quick',signal:aiCtl.signal};
+    if(usePhoto)opts.images=[photoFile];
+    const r=await sampleFn.json(aiPrompt(f,usePhoto),opts);
+    const num=v=>{const n=Number(v);return isFinite(n)&&n>=0?n:null;};
+    const e=num(r&&r.energi_kkal),g=num(r&&r.gula_g),na=num(r&&r.natrium_mg),l=num(r&&r.lemak_g);
+    if(e==null||g==null||na==null||l==null)throw {code:'invalid_json'};
+    S.est={src:'ai',e:Math.round(e),g:Math.round(g*10)/10,na:Math.round(na),l:Math.round(l*10)/10,
+      conf:['rendah','sedang','tinggi'].includes(r.keyakinan)?r.keyakinan:'sedang',campuran:!!r.hidangan_campuran,
+      alasan:String(r.alasan||'').slice(0,240),saran:String(r.saran_reformulasi||'').slice(0,200),foto:usePhoto};
+    toast('Taksiran AI selesai');
+  }catch(err){
+    const code=err&&err.code;
+    if(['not_granted','sampling_disabled','not_declared','capability_disabled','capability_removed'].includes(code)){sampleFn=null;T.aiState='off';T.aiMsg='AI tidak diizinkan di tampilan ini. Pakai taksiran cepat tanpa AI.';}
+    else if(code==='images_unavailable'){sampleImages=false;T.aiMsg='Tampilan ini tidak bisa mengirim foto. Coba lagi tanpa foto.';}
+    else T.aiMsg=AI_ERR[code]||'Koneksi ke AI gagal. Coba lagi.';
+  }finally{T.aiBusy=false;aiCtl=null;if(S.role==='kantin'&&S.tab.kantin==='nilai')renderView();save();}
+}
+
+/* ---------- render: kerangka ---------- */
+const TABS={pekerja:[['baca','Modul 1','Baca rapor'],['temu','Modul 3','Temu di meja saji'],['riwayat','Umpan balik','Riwayat dan privasi']],kantin:[['nilai','Modul 2','Nilai menu'],['dasbor','Mingguan','Dasbor RNSR']]};
+function render(){renderTop();renderStrip();renderTabs();renderView();renderMbar();save();}
+function renderTop(){
+  $('#top').innerHTML=`<div class="brand"><span class="wordmark">SANGU</span><span class="brand-sub">Bekal gizi dari rapor CKG ke nampan kantin kerja</span></div>
+  <div class="seg" role="group" aria-label="Pilih peran">
+    <button type="button" data-act="role" data-v="pekerja" aria-pressed="${S.role==='pekerja'}">Pekerja</button>
+    <button type="button" data-act="role" data-v="kantin" aria-pressed="${S.role==='kantin'}">Pengelola kantin</button>
+  </div><span class="proto">Prototipe · data contoh</span>`;
+}
+function raporChip(){
+  if(!S.consent)return `<span class="chip"><span class="dot none"></span>Belum diizinkan</span>`;
+  const ev=evalRapor(R());const lab={hijau:'Hijau',kuning:'Kuning',merah:'Merah'}[ev.overall];
+  return `<span class="chip"><span class="dot ${ev.overall}"></span>${esc(S.rapor.nama)} · ${lab}</span>`;
+}
+function renderStrip(){
+  const el=$('#strip');let closed=false,html='';
+  if(S.role==='pekerja'){
+    const td=S.today;const sameNow=td&&sameTray(td.tray,S.tray);
+    const trayChip=!td?`<span class="chip">Belum diambil</span>`:td.fit?`<span class="chip good">✓ Sesuai rapor</span>`:`<span class="chip bad">✕ Belum sesuai</span>`;
+    closed=!!(td&&td.fit&&S.consent);
+    const knot=closed?'Celah Rapor-Nampan tertutup':(!S.consent?'Rapor tidak sampai ke nampan':(td&&!td.fit?'Nampan belum mengikuti rapor':'Celah Rapor-Nampan masih terbuka'));
+    html=`<div class="s-end l"><span class="s-lab">Rapor CKG</span>${raporChip()}</div>
+      <div class="bridge"><span class="b-seg"></span><span class="b-knot">${knot}</span><span class="b-seg"></span></div>
+      <div class="s-end r"><span class="s-lab">Nampan hari ini${sameNow||!td?'':' (diubah)'}</span>${trayChip}</div>`;
+  }else{
+    const I=rnsrInfo();closed=I.r>=1;
+    html=`<div class="s-end l"><span class="s-lab">Ringkasan rapor anonim</span><span class="chip">${I.top?esc(I.top.label)+' '+fmtV(I.L)+'%':'Tidak ada kelompok ≥ 20'}</span></div>
+      <div class="bridge"><span class="b-seg"></span><span class="b-knot">RNSR ${fmt(I.r,2)} · ${closed?'menu sesuai rapor':'menu belum sesuai'}</span><span class="b-seg"></span></div>
+      <div class="s-end r"><span class="s-lab">Menu hari ini</span><span class="chip">Level A–B ${fmtV(I.pct)}%</span></div>`;
+  }
+  el.className='strip'+(closed?' closed':'');el.innerHTML=html;
+}
+function renderTabs(){
+  const cur=S.tab[S.role];
+  $('#tabs').innerHTML=TABS[S.role].map(([id,sm,lb])=>`<button type="button" class="tab" role="tab" id="tab-${id}" aria-selected="${cur===id}" aria-controls="view" data-act="tab" data-v="${id}"><small>${sm}</small><span>${lb}</span></button>`).join('');
+}
+function renderView(){
+  const v=$('#view');const tab=S.tab[S.role];
+  v.setAttribute('role','tabpanel');v.setAttribute('aria-labelledby','tab-'+tab);
+  if(tab==='baca')v.innerHTML=viewBaca();
+  else if(tab==='temu')v.innerHTML=viewTemu();
+  else if(tab==='riwayat')v.innerHTML=viewRiwayat();
+  else if(tab==='nilai')v.innerHTML=viewNilai();
+  else v.innerHTML=viewDasbor();
+  if(tab==='baca')updateBaca();
+  if(tab==='dasbor')drawTrend();
+  T.stampAnim=false;
+  try{history.replaceState(null,'','#'+tab);}catch(e){}
+}
+function renderMbar(){
+  const bar=$('#mbar');const show=S.role==='pekerja'&&S.tab.pekerja==='temu'&&S.scanned;
+  bar.hidden=!show;document.body.classList.toggle('has-mbar',show);
+  if(!show)return;
+  const b=budgetOf().meal;const list=trayList(S.tray);const u=useOf(sumOf(list),b);
+  const core=coreOk(S.tray);
+  const st=!core?'Nampan belum lengkap':okU(u)?'Sesuai rapor':'Melewati jatah';
+  bar.innerHTML=`<div class="mi"><b>${st}</b><span>Garam ${fmt(u.na)}% · Gula ${fmt(u.g)}% · Lemak ${fmt(u.l)}%</span></div>
+    <button type="button" class="btn sm" data-act="to-tray">Lihat nampan</button>
+    <button type="button" class="btn primary sm" data-act="take" ${core?'':'disabled'}>Ambil</button>`;
+}
+
+/* ---------- Modul 1: Baca ---------- */
+function viewBaca(){
+  const r=S.rapor;
+  const fld=(k,label,unit,step)=>`<div class="fld"><label class="flabel" for="r-${k}">${label}</label><div class="inp"><input id="r-${k}" type="number" inputmode="decimal" step="${step||1}" data-r="${k}" value="${esc(r[k])}"><span class="u">${unit}</span></div><span class="ind" id="ind-${k}"></span></div>`;
+  return `<div class="grid-2">
+  <section class="card" aria-labelledby="h-baca">
+    <div class="sec-head"><span class="eyebrow">Modul 1 · SANGU Baca</span><h2 id="h-baca">Rapor CKG dibaca di ponsel pekerja</h2><p>Pilih contoh pekerja atau ubah angka rapor. Profil batas gizi di sebelahnya ikut berubah seketika.</p></div>
+    <div class="personas" id="personas"></div>
+    <p class="story" id="story"></p>
+    <div class="rform">
+      <div class="fld"><span class="flabel" id="lab-sex">Jenis kelamin</span><div class="seg sm" role="group" aria-labelledby="lab-sex" id="sexseg"></div></div>
+      ${fld('usia','Usia','tahun')}
+      <div class="fld"><label class="flabel" for="r-sis">Tekanan darah</label><div class="pair"><div class="inp"><input id="r-sis" type="number" inputmode="numeric" data-r="sis" value="${esc(r.sis)}" aria-label="Sistolik"></div><span class="muted">/</span><div class="inp"><input id="r-dia" type="number" inputmode="numeric" data-r="dia" value="${esc(r.dia)}" aria-label="Diastolik"><span class="u">mmHg</span></div></div><span class="ind" id="ind-td"></span></div>
+      ${fld('gds','Gula darah sewaktu','mg/dL')}
+      ${fld('imt','Indeks massa tubuh','kg/m²','0.1')}
+      ${fld('lp','Lingkar perut','cm')}
+    </div>
+    <label class="consent"><input type="checkbox" id="consent" ${S.consent?'checked':''}><span>Saya izinkan SANGU membaca rapor CKG di ponsel ini. Angka medis tidak dikirim ke perusahaan maupun kantin.</span></label>
+  </section>
+  <section class="card" id="baca-result" aria-live="polite"></section>
+  </div>`;
+}
+function updateBaca(){
+  const pe=$('#personas');if(!pe)return;
+  pe.innerHTML=Object.entries(PERSONAS).map(([id,p])=>{const c=evalRapor(p).overall;return `<button type="button" class="persona" data-act="persona" data-v="${id}" aria-pressed="${S.persona===id}"><b><span class="dot ${c}"></span>${esc(p.nama)}</b><span>${esc(p.peran)}</span></button>`;}).join('')+
+    `<button type="button" class="persona" data-act="persona" data-v="custom" aria-pressed="${S.persona==='custom'}"><b><span class="dot none"></span>Isi sendiri</b><span>Ubah angka di bawah</span></button>`;
+  $('#story').textContent=S.persona!=='custom'&&PERSONAS[S.persona]?PERSONAS[S.persona].cerita:'Angka rapor diisi manual. Hasil di sebelah kanan dihitung dari isian ini.';
+  const r=R();
+  $('#sexseg').innerHTML=`<button type="button" data-act="sex" data-v="P" aria-pressed="${r.sex==='P'}">Perempuan</button><button type="button" data-act="sex" data-v="L" aria-pressed="${r.sex==='L'}">Laki-laki</button>`;
+  const ev=evalRapor(r);
+  const ind=(id,o,extra)=>{const el=$('#ind-'+id);if(el)el.innerHTML=`<span class="dot ${o.c}"></span>${esc(o.t)}${extra?` <span class="muted">· ${extra}</span>`:''}`;};
+  ind('td',ev.td);ind('gds',ev.gd);ind('imt',ev.imt);ind('lp',ev.lp,'batas '+ev.lpLim+' cm');
+  const ui=$('#ind-usia');if(ui)ui.innerHTML=`<span class="muted">AKG ${fmt(akg(r.sex,r.usia))} kkal per hari</span>`;
+  $('#baca-result').innerHTML=bacaResult();
+}
+function bacaResult(){
+  const head=`<div class="sec-head"><span class="eyebrow">Keluaran SANGU Baca</span><h2>Profil batas gizi makan siang</h2><p>Makan siang dihitung 40% dari batas harian. Profil inilah yang dicocokkan dengan label menu di meja saji.</p></div>`;
+  if(!S.consent){
+    return head+`<div class="verdict none"><div class="swatch none">?</div><div><b>Rapor belum dibaca</b><p class="small muted">Tanpa izin, SANGU tidak menyentuh rapor. Meja saji hanya menampilkan label Nutri-Level seragam dengan batas umum.</p></div></div>
+    <button type="button" class="btn primary" data-act="consent-on">Beri izin membaca rapor</button>`;
+  }
+  const r=R(),B=budgetOf(),ev=B.ev,name=esc(S.rapor.nama||'Anda');
+  const lab={hijau:'HIJAU',kuning:'KUNING',merah:'MERAH'}[ev.overall];
+  const issues=[];
+  if(ev.td.c!=='hijau')issues.push(`Tekanan darah ${r.sis}/${r.dia} (${ev.td.t.toLowerCase()})`);
+  if(ev.gd.c!=='hijau')issues.push(`Gula darah ${r.gds} mg/dL (${ev.gd.t.toLowerCase()})`);
+  if(ev.imt.c!=='hijau')issues.push(`IMT ${fmtV(r.imt)} (${ev.imt.t.toLowerCase()})`);
+  if(ev.lp.c!=='hijau')issues.push(`Lingkar perut ${r.lp} cm (${ev.lp.t.toLowerCase()})`);
+  const m=B.meal,d=B.daily;
+  const row=(label,val,daily,why,t)=>`<div class="brow"><span class="k">${label}</span><div class="bv"><span class="v">${val}</span><span class="d">${daily}</span></div><span class="why${t?' t':''}">${why}</span></div>`;
+  let html=head+`<div class="verdict ${ev.overall}"><div class="swatch ${ev.overall}">${lab}</div><div><b>Rapor ${name} berwarna ${lab.toLowerCase()}</b>${issues.length?`<ul>${issues.map(i=>`<li>${esc(i)}</li>`).join('')}</ul>`:`<p class="small">Keempat indikator dalam rentang normal.</p>`}</div></div>
+  <div class="blist">
+    ${row('Garam',`≤ ${fmt(m.na)} mg natrium`,`${fmt(d.na)} mg/hari`,`Setara ${fmtV(m.na*2.5/1000)} g garam. ${B.why.na}`,B.tight.na)}
+    ${row('Gula',`≤ ${fmtV(m.g)} g`,`${fmtV(d.g)} g/hari`,B.why.g,B.tight.g)}
+    ${row('Lemak',`≤ ${fmtV(m.l)} g`,`${fmtV(d.l)} g/hari`,B.why.l,B.tight.l)}
+    ${row('Energi',`≤ ${fmt(m.e)} kkal`,`${fmt(d.e)} kkal/hari`,B.why.e,B.tight.e)}
+  </div>`;
+  if(ev.overall==='merah')html+=referBox(true);
+  html+=`<div class="row"><button type="button" class="btn primary" data-act="goto" data-v="temu">Bawa profil ini ke meja saji</button><span class="note">Profil tersimpan di peramban ini saja.</span></div>`;
+  return html;
+}
+function referBox(full){
+  const code=S.refCode;
+  return `<div class="refer"><b>Rapor merah memicu rujukan</b><p class="small">Tekanan darah atau gula darah berada di rentang merah. SANGU menyarankan pemeriksaan lanjutan di klinik perusahaan atau puskesmas. Kantin tidak menerima alasan rujukan.</p>
+  ${code?`<div class="row"><span class="code">${code}</span><button type="button" class="btn sm" data-act="copy-ref">Salin kode</button></div><p class="note">Tunjukkan kode ini di klinik. Rujukan tercatat di SATUSEHAT Mobile (simulasi).</p>`:`<div class="row"><button type="button" class="btn sm" data-act="make-ref">Buat kode rujukan</button>${full?'<span class="note">Kode berlaku untuk klinik perusahaan dan puskesmas.</span>':''}</div>`}</div>`;
+}
+
+/* ---------- Modul 3: Temu ---------- */
+function qrSVG(){
+  let seed=20260925;const rnd=()=>{seed=(seed*1103515245+12345)&0x7fffffff;return seed/0x7fffffff;};
+  const N=25;let p='';
+  const finder=(x,y)=>`<rect x="${x}" y="${y}" width="7" height="7" fill="#151515"/><rect x="${x+1}" y="${y+1}" width="5" height="5" fill="#fff"/><rect x="${x+2}" y="${y+2}" width="3" height="3" fill="#151515"/>`;
+  const inF=(x,y)=>(x<8&&y<8)||(x>=N-8&&y<8)||(x<8&&y>=N-8);
+  for(let y=0;y<N;y++)for(let x=0;x<N;x++){if(inF(x,y))continue;if(rnd()>0.52)p+=`M${x} ${y}h1v1h-1z`;}
+  return `<svg viewBox="0 0 ${N} ${N}" shape-rendering="crispEdges" aria-hidden="true"><rect width="${N}" height="${N}" fill="#fff"/><path d="${p}" fill="#151515"/>${finder(0,0)}${finder(N-7,0)}${finder(0,N-7)}</svg>`;
+}
+function viewTemu(){
+  sanitizeTray();
+  const B=budgetOf(),b=B.meal;const ev=S.consent?evalRapor(R()):null;
+  const nama=S.consent?esc(S.rapor.nama||'Anda'):'Anda';
+  let main='';
+  if(!S.consent)main+=`<div class="demand">SANGU belum membaca rapor. Meja saji memakai label Nutri-Level seragam dan batas umum. <button type="button" class="btn ghost sm" data-act="goto" data-v="baca">Buka Modul 1</button></div>`;
+  if(ev&&ev.overall==='merah')main+=referBox(false);
+  if(!S.scanned){
+    main+=`<section class="card"><div class="sec-head"><span class="eyebrow">Modul 3 · SANGU Temu</span><h2>Pindai stiker QR di meja saji</h2><p>Setiap meja saji punya stiker QR. Memindainya membuka menu hari ini yang sudah berlabel Nutri-Level, lalu mencocokkannya dengan profil batas gizi di ponsel.</p></div>
+    <div class="scan"><div class="qr">${qrSVG()}${T.scanning?'<span class="laser" aria-hidden="true"></span>':''}<span class="tag">MEJA 2</span></div>
+    <div class="scan-col"><b>Meja Saji 2 · Kantin Blok C</b><span class="small muted">Stiker contoh. Prototipe tidak memakai kamera.</span><button type="button" class="btn primary" data-act="scan" ${T.scanning?'disabled':''}>${T.scanning?'Memindai...':'Pindai QR'}</button></div></div></section>`;
+  }else{
+    const A=activeMenu();const rec=recommend(b);
+    const pkey=S.persona+'|'+b.na+'|'+b.g+'|'+b.l;
+    if(rec.laukUnik<2&&!S.demand[pkey]){S.demand[pkey]=true;}
+    main+=`<section class="card"><div class="table-head"><div class="sec-head"><span class="eyebrow">Modul 3 · SANGU Temu</span><h2>Tiga nampan yang sesuai rapor ${nama}</h2></div><button type="button" class="btn ghost sm" data-act="rescan">Pindai ulang</button></div>
+    <div class="row"><span class="small muted">Lihat sebagai</span><div class="seg sm" role="group" aria-label="Ganti pekerja">${Object.entries(PERSONAS).map(([id,p])=>`<button type="button" data-act="persona" data-v="${id}" aria-pressed="${S.persona===id}">${esc(p.nama)}</button>`).join('')}</div></div>
+    <p class="small muted">Meja Saji 2 · Kantin Blok C · ${A.length} menu tervalidasi. ${fmt(rec.total)} kombinasi nampan muat dalam jatah makan siang ${S.consent?'rapor ini':'umum'}.</p>`;
+    if(!rec.picks.length){
+      main+=`<div class="demand">Belum ada kombinasi nasi, lauk, dan sayur yang muat. Permintaan menu Level A dikirim anonim ke kantin.</div>`;
+    }else{
+      main+=`<div class="recos">${rec.picks.map((p,i)=>{const list=KOMP.map(k=>p.tray[k.id]).filter(Boolean).map(byId);
+        return `<div class="reco"><h4>${p.title}</h4><p class="why">${p.why}</p><ul>${list.map(it=>`<li>${nl(levelOf(it).L)}<span>${esc(it.nama)}</span></li>`).join('')}</ul>
+        <p class="sum">Garam ${fmt(p.u.na)}% · Gula ${fmt(p.u.g)}%<br>Lemak ${fmt(p.u.l)}% · Energi ${fmt(p.u.e)}%</p>
+        <button type="button" class="btn sm" data-act="reco" data-i="${i}">Pakai nampan ini</button></div>`;}).join('')}</div>`;
+      if(rec.laukUnik<2)main+=`<div class="demand">Hanya ${rec.laukUnik} jenis lauk yang muat untuk rapor ini. Permintaan menu Level A dikirim anonim ke dasbor kantin.</div>`;
+    }
+    main+=`</section>`;
+    // label seragam vs pribadi
+    const green=A.filter(it=>'AB'.includes(levelOf(it).L));const flip=green.filter(it=>fitOf(it,b).k!=='cocok');
+    const names=flip.map(it=>it.nama.toLowerCase());
+    const joinId=a=>a.length<=1?a.join(''):a.slice(0,-1).join(', ')+' dan '+a[a.length-1];
+    const cmp=!S.consent?`Tanpa rapor, semua pekerja melihat label yang sama. ${green.length} menu berlabel hijau (A atau B).`
+      :flip.length?`Label seragam memberi warna hijau pada ${green.length} menu. Untuk rapor ${nama}, ${flip.length} di antaranya tetap perlu dibatasi, yaitu ${esc(joinId(names))}.`
+      :`Label seragam memberi warna hijau pada ${green.length} menu, dan semuanya cocok untuk rapor ${nama}.`;
+    main+=`<section class="card"><div class="sec-head"><h3 class="h">Susun sendiri</h3><p>Ketuk menu untuk mengisi sekat nampan. Kotak huruf adalah Nutri-Level seragam. Label di kanan menunjukkan kecocokan dengan rapor${S.consent?'':' (batas umum)'}.</p></div>
+    <p class="compare">${cmp}</p>
+    <div class="legend-nl"><span>${nl('A')}GGL paling rendah</span><span>${nl('B')}Rendah</span><span>${nl('C')}Sedang</span><span>${nl('D')}Tinggi, batasi</span></div>
+    <div class="mgroups">${KOMP.map(k=>{const items=A.filter(x=>x.kat===k.id);if(!items.length)return '';
+      return `<div class="mgroup"><h4>${k.label}</h4>${items.map(it=>{const f=fitOf(it,b);const on=S.tray[k.id]===it.id;
+        return `<button type="button" class="mitem" data-act="pick" data-id="${it.id}" aria-pressed="${on}">${nl(levelOf(it).L)}<span><span class="nm">${esc(it.nama)}</span><span class="pr">${esc(it.porsi)} · ${fmt(it.na)} mg natrium · ${fmtV(it.g)} g gula · ${fmtV(it.l)} g lemak</span></span>${S.consent?pb(f.k):''}</button>`;}).join('')}</div>`;}).join('')}</div></section>`;
+  }
+  return `<div class="temu"><div class="temu-main">${main}</div><aside class="temu-side">${trayCard(B)}</aside></div>`;
+}
+function wrapText(str,max){const w=String(str).split(' ');const out=[];let cur='';for(const x of w){if(cur&&(cur+' '+x).length>max){out.push(cur);cur=x;}else cur=(cur?cur+' ':'')+x;}if(cur)out.push(cur);return out.slice(0,3);}
+function traySVG(t,stamp){
+  const G={sayur:[22,22,96,78],buah:[126,22,74,78],ekstra:[208,22,70,78],karbo:[22,108,150,110],lauk:[180,108,98,110]};
+  const col=L=>`var(--nl-${L.toLowerCase()})`,ink=L=>`var(--nl-${L.toLowerCase()}-ink)`;
+  let s=`<svg viewBox="0 0 380 240" role="group" aria-label="Nampan sekat">
+  <defs><linearGradient id="steelg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" style="stop-color:var(--steel-1)"/><stop offset="1" style="stop-color:var(--steel-2)"/></linearGradient></defs>
+  <rect x="8" y="8" width="284" height="224" rx="26" style="fill:url(#steelg);stroke:var(--steel-3);stroke-width:1.5"/>`;
+  const drawLabel=(cx,cy,it,maxc,fs)=>{fs=fs||12.5;const lines=wrapText(it.nama,maxc);const lh=fs+1.5;const y0=cy-(lines.length-1)*lh/2+4;
+    return lines.map((ln,i)=>`<text x="${cx}" y="${y0+i*lh}" text-anchor="middle" style="font-family:var(--font-body);font-size:${fs}px;font-weight:600;fill:var(--ink)">${esc(ln)}</text>`).join('');};
+  for(const k of ['sayur','buah','ekstra','karbo','lauk']){
+    const [x,y,w,h]=G[k];const it=t[k]?byId(t[k]):null;const cx=x+w/2,cy=y+h/2;
+    if(!it){
+      s+=`<g><rect class="cbox" x="${x}" y="${y}" width="${w}" height="${h}" rx="14" style="fill:var(--steel-2);stroke:var(--steel-3);stroke-width:1.2"/>
+      <text x="${cx}" y="${cy+6}" text-anchor="middle" style="font-family:var(--font-stencil);font-size:${k==='karbo'?22:15}px;letter-spacing:1.5px;fill:var(--steel-4)">${KB[k].st}</text></g>`;
+    }else{
+      const L=levelOf(it).L;
+      s+=`<g class="comp" data-act="tray-clear" data-k="${k}" role="button" tabindex="0" aria-label="${KB[k].label} ${esc(it.nama)}, Nutri-Level ${L}. Ketuk untuk mengosongkan">
+      <rect class="cbox" x="${x}" y="${y}" width="${w}" height="${h}" rx="14" style="fill:${col(L)};fill-opacity:.2;stroke:${col(L)};stroke-width:2.5"/>
+      ${drawLabel(cx,cy+4,it,Math.floor(w/7.4))}
+      <circle cx="${x+w-13}" cy="${y+13}" r="10" style="fill:${col(L)}"/><text x="${x+w-13}" y="${y+18}" text-anchor="middle" style="font-family:var(--font-cond);font-weight:700;font-size:14px;fill:${ink(L)}">${L}</text></g>`;
+    }
+  }
+  const mi=t.minum?byId(t.minum):null;
+  s+=`<circle cx="336" cy="150" r="38" style="fill:var(--steel-1);stroke:var(--steel-3);stroke-width:1.5"/>`;
+  if(!mi){s+=`<circle cx="336" cy="150" r="29" style="fill:var(--steel-2)"/><text x="336" y="155" text-anchor="middle" style="font-family:var(--font-stencil);font-size:13px;letter-spacing:1px;fill:var(--steel-4)">MINUM</text>`;}
+  else{const L=levelOf(mi).L;s+=`<g class="comp" data-act="tray-clear" data-k="minum" role="button" tabindex="0" aria-label="Minum ${esc(mi.nama)}, Nutri-Level ${L}. Ketuk untuk mengosongkan"><circle class="cbox" cx="336" cy="150" r="29" style="fill:${col(L)};fill-opacity:.2;stroke:${col(L)};stroke-width:2.5"/>${drawLabel(336,150,mi,8,10.5)}<circle cx="362" cy="120" r="10" style="fill:${col(L)}"/><text x="362" y="125" text-anchor="middle" style="font-family:var(--font-cond);font-weight:700;font-size:14px;fill:${ink(L)}">${L}</text></g>`;}
+  if(stamp){
+    s+=`<g transform="translate(150 122) rotate(-11)"><g class="${T.stampAnim?'stamp-anim':''}"><rect x="-104" y="-25" width="208" height="50" rx="8" style="fill:var(--surface);fill-opacity:.82;stroke:var(--good);stroke-width:3.5"/><text x="0" y="8" text-anchor="middle" textLength="176" lengthAdjust="spacingAndGlyphs" style="font-family:var(--font-stencil);font-size:23px;fill:var(--good)">SESUAI RAPOR</text></g></g>`;
+  }
+  return s+`</svg>`;
+}
+function trayCard(B){
+  const b=B.meal;const t=S.tray;const list=trayList(t);const tot=sumOf(list);const u=useOf(tot,b);
+  const core=coreOk(t);const fit=okU(u);const taken=S.today&&sameTray(S.today.tray,t);
+  const stamp=!!(taken&&S.today.fit);
+  let verdict;
+  if(!list.length)verdict=`<p class="tverdict none">${S.scanned?'Pilih salah satu nampan rekomendasi atau susun sendiri.':'Pindai QR meja saji untuk mulai mengisi nampan.'}</p>`;
+  else if(!core)verdict=`<p class="tverdict none">Lengkapi ${['karbo','lauk','sayur'].filter(k=>!t[k]).map(k=>KB[k].label.toLowerCase()).join(', ')} untuk menilai nampan.</p>`;
+  else if(fit)verdict=`<p class="tverdict good">✓ Sesuai rapor. Semua zat gizi di bawah jatah makan siang.</p>`;
+  else{const over=NUT.filter(n=>u[n.k]>100).map(n=>`${n.label.toLowerCase()} ${fmt(u[n.k])}%`);verdict=`<p class="tverdict bad">✕ Melewati jatah ${over.join(', ')}.</p>`;}
+  const meters=NUT.map(n=>{const p=u[n.k];const w=Math.min(p,150)/150*100;const cls=p>100?'over':p>80?'mid':'ok';
+    const val=n.k==='na'?`<b>${fmt(tot.na)}</b>/${fmt(b.na)} mg`:n.k==='e'?`<b>${fmt(tot.e)}</b>/${fmt(b.e)} kkal`:`<b>${fmtV(tot[n.k])}</b>/${fmtV(b[n.k])} g`;
+    return `<div class="meter"><span class="k">${n.label}</span><div class="track" role="img" aria-label="${n.label} ${fmt(p)} persen dari jatah"><div class="fill ${cls}" style="width:${w}%"></div><span class="lim" title="Batas 100%"></span></div><span class="v">${val}</span></div>`;}).join('');
+  let swap='';
+  if(core&&!fit){
+    const sw=oneSwap(t,b);
+    if(sw){const from=byId(sw.from),to=sw.to?byId(sw.to):null;
+      swap=`<div class="swap"><span>${to?`Tukar <b>${esc(from.nama)}</b> dengan <b>${esc(to.nama)}</b>`:`Lepas <b>${esc(from.nama)}</b>`} agar sesuai rapor.</span><button type="button" class="btn sm" data-act="swap" data-k="${sw.k}" data-to="${sw.to||''}">Terapkan</button></div>`;}
+    else swap=`<div class="swap"><span>Satu tukar belum cukup. Pakai salah satu nampan rekomendasi.</span></div>`;
+  }
+  const chip=taken?(S.today.fit?`<span class="chip good">Sudah diambil</span>`:`<span class="chip bad">Diambil, belum sesuai</span>`):(S.usedReco&&list.length?`<span class="chip">Dari rekomendasi</span>`:list.length?`<span class="chip">Susunan sendiri</span>`:'');
+  return `<section class="card tray-card" id="tray-card" aria-live="polite">
+    <div class="row between"><h3 class="h">Nampan ${S.consent?esc(S.rapor.nama||'saya'):'saya'}</h3>${chip}</div>
+    <div class="tray-wrap">${traySVG(t,stamp)}</div>
+    ${verdict}
+    <div class="meters">${meters}</div>
+    <p class="note">Garis hitam pada tiap batang adalah jatah makan siang${B.general?' umum':' dari rapor'}.</p>
+    ${swap}
+    <div class="row"><button type="button" class="btn primary" data-act="take" ${core?'':'disabled'}>${taken?'Ambil ulang':'Ambil nampan ini'}</button>
+    ${list.length?'<button type="button" class="btn" data-act="tray-empty">Kosongkan</button>':''}
+    ${S.scanned?'<button type="button" class="btn ghost" data-act="habit">Coba nampan kebiasaan lama</button>':''}</div>
+    ${list.length?'<p class="note">Ketuk sekat nampan untuk mengosongkannya.</p>':''}
+  </section>`;
+}
+
+/* ---------- Riwayat dan privasi ---------- */
+function viewRiwayat(){
+  const today=S.today?{w:2,d:'Jum',fit:S.today.fit,m:S.today.m,na:S.today.na,today:true}:{w:2,d:'Jum',todo:true,today:true};
+  const all=HIST.concat([today]);
+  const done=all.filter(x=>!x.todo);const fits=done.filter(x=>x.fit);const mand=fits.filter(x=>x.m);
+  const avg=w=>{const a=done.filter(x=>x.w===w);return a.length?a.reduce((s,x)=>s+x.na,0)/a.length:0;};
+  const w1=avg(1),w2=avg(2);const w2d=done.filter(x=>x.w===2);const w2f=w2d.filter(x=>x.fit).length;
+  const wk=w=>`<div class="wk"><span class="wl">Minggu ${w}</span>${all.filter(x=>x.w===w).map(x=>`<div class="day ${x.todo?'todo':x.fit?'fit':'miss'}${x.today?' today':''}"><span>${x.today?'Hari ini':x.d}</span><span class="ic" aria-label="${x.todo?'Belum diambil':x.fit?'Sesuai rapor':'Belum sesuai'}">${x.todo?'?':x.fit?'✓':'✕'}</span><span class="m">${x.fit&&x.m?'MANDIRI':''}</span></div>`).join('')}</div>`;
+  const r=R();const ev=S.consent?evalRapor(r):null;
+  const fb=`Rata-rata garam di nampan turun dari <b>${fmt(w1)}%</b> jatah pada minggu 1 menjadi <b>${fmt(w2)}%</b> pada minggu 2. Minggu ini ${w2f} dari ${w2d.length} nampan sesuai rapor, dan ${mand.length} di antaranya dipilih tanpa membuka rekomendasi. ${mand.length>=2?'Pilihan mandiri inilah ukuran keberhasilan SANGU.':'Coba susun nampan sendiri besok tanpa membuka rekomendasi.'}`;
+  return `<div class="grid-2">
+  <section class="card"><div class="sec-head"><span class="eyebrow">Umpan balik pribadi</span><h2>Sepuluh hari makan siang</h2><p>Umpan balik dari data pembelian sendiri, bukan pengingat. Label MANDIRI berarti nampan sesuai rapor dipilih tanpa membuka rekomendasi.</p></div>
+    <div class="weeks">${wk(1)}${wk(2)}</div>
+    <div class="stats">
+      <div class="stat"><span class="n">${fits.length}/${done.length}</span><span class="l">nampan sesuai rapor</span></div>
+      <div class="stat"><span class="n">${mand.length}</span><span class="l">dipilih mandiri</span></div>
+      <div class="stat"><span class="n">${fmt(w2)}%</span><span class="l">rata-rata garam minggu ini</span></div>
+    </div>
+    <p class="feedback">${fb}</p>
+    ${S.today?'':'<div class="row"><button type="button" class="btn primary" data-act="goto" data-v="temu">Isi nampan hari ini</button></div>'}
+  </section>
+  <section class="card"><div class="sec-head"><span class="eyebrow">Privasi</span><h2>Siapa melihat apa</h2><p>Rapor diolah di ponsel. Kantin hanya menerima ringkasan kelompok, dan perusahaan tidak menerima apa pun.</p></div>
+    <div class="who">
+      <div class="who-row"><span class="k">Ponsel ini</span><span class="v">${S.consent?`<span class="mono">TD ${r.sis}/${r.dia} · GDS ${r.gds} · IMT ${fmtV(r.imt)} · LP ${r.lp} cm</span><br>Diolah menjadi profil batas gizi. Tidak dikirim keluar.`:'Tidak ada rapor tersimpan. Izin sudah dicabut.'}</span></div>
+      <div class="who-row"><span class="k">Kantin</span><span class="v">Warna risiko dilebur ke ringkasan kelompok. Kelompok di bawah 20 orang tidak ditampilkan. Pilihan nampan tercatat per level Nutri-Level, tanpa nama.</span></div>
+      <div class="who-row"><span class="k">Perusahaan</span><span class="v">Tidak menerima angka rapor, warna rapor, maupun pilihan nampan per orang.</span></div>
+      <div class="who-row"><span class="k">Klinik</span><span class="v">${ev&&ev.overall==='merah'?'Menerima kode rujukan bila pekerja menunjukkannya.':'Hanya terlibat bila rapor merah dan pekerja membawa kode rujukan.'}</span></div>
+    </div>
+    <div class="row">${S.consent?'<button type="button" class="btn" data-act="revoke">Cabut izin dan hapus profil</button>':'<button type="button" class="btn primary" data-act="consent-on">Beri izin lagi</button>'}</div>
+    <p class="note">Rancangan mengikuti UU Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi dengan ringkasan anonim minimal 20 orang.</p>
+  </section></div>`;
+}
+
+/* ---------- Modul 2: Nilai ---------- */
+function viewNilai(){
+  const f=S.form;
+  const queue=S.menu.filter(it=>it.status==='ai');
+  const cat=S.menu.filter(isValid).slice().sort((a,b)=>KOMP.findIndex(k=>k.id===a.kat)-KOMP.findIndex(k=>k.id===b.kat));
+  return `<div class="grid-2">
+  <section class="card"><div class="sec-head"><span class="eyebrow">Modul 2 · SANGU Nilai</span><h2>Taksir label Nutri-Level menu baru</h2><p>AI menaksir gula, garam, dan lemak dari resep atau foto. Label baru tidak tampil di meja saji sebelum ditinjau ahli gizi atau diuji laboratorium.</p></div>
+    <div class="form">
+      <div class="fld"><label class="flabel" for="f-nama">Nama menu</label><input class="tx" id="f-nama" data-f="nama" value="${esc(f.nama)}"></div>
+      <div class="fld"><label class="flabel" for="f-kat">Sekat nampan</label><select class="tx" id="f-kat">${KOMP.map(k=>`<option value="${k.id}" ${f.kat===k.id?'selected':''}>${k.label}</option>`).join('')}</select></div>
+      <div class="fld"><label class="flabel" for="f-porsi">Porsi</label><input class="tx" id="f-porsi" data-f="porsi" value="${esc(f.porsi)}"></div>
+      <div class="fld"><label class="flabel" for="f-gram">Berat satu porsi (g atau ml)</label><input class="tx" id="f-gram" type="number" inputmode="numeric" data-f="gram" value="${esc(f.gram)}"></div>
+      <div class="fld full"><label class="flabel" for="f-bahan">Resep dan bahan untuk satu porsi</label><textarea class="tx" id="f-bahan" data-f="bahan">${esc(f.bahan)}</textarea></div>
+    </div>
+    <div class="ai-zone" id="ai-zone">${aiZone()}</div>
+    <div id="est-box">${estBox()}</div>
+  </section>
+  <section class="card"><div class="sec-head"><span class="eyebrow">Validasi berjenjang</span><h2>Antrean validasi</h2><p>Taksiran foto bisa meleset hingga 38,3%, terutama hidangan campuran (Shonkoff dkk., 2023). Menu di antrean ini belum terlihat oleh pekerja.</p></div>
+    <div class="q-list">${queue.length?queue.map(qItem).join(''):'<p class="muted">Antrean kosong. Semua menu sudah divalidasi.</p>'}</div>
+  </section></div>
+  <section class="card" style="margin-top:16px"><div class="table-head"><div class="sec-head"><h3 class="h">Katalog menu tervalidasi</h3><p class="small muted">Nyalakan sakelar agar menu tampil di Meja Saji 2. Label dihitung dari persentase batas GGL harian untuk zat gizi tertinggi.</p></div><span class="chip">${activeMenu().length} menu di meja saji</span></div>
+    <div class="tbl-wrap"><table><thead><tr><th>Menu</th><th>Sekat</th><th>Level</th><th class="num">Natrium</th><th class="num">Gula</th><th class="num">Lemak</th><th>Status</th><th>Meja saji</th></tr></thead><tbody>
+    ${cat.map(it=>catRow(it)).join('')}
+    </tbody></table></div>
+  </section>`;
+}
+function aiZone(){
+  const st=T.aiState;
+  const status=st==='on'?'AI siap. Taksiran memakai akun Claude pembuka halaman dan meminta izin sekali.':st==='wait'?'Menyambung ke AI...':'AI tidak tersedia di tampilan ini. Taksiran cepat tetap bisa dipakai.';
+  return `${sampleImages&&st==='on'?`<div class="fld"><label class="flabel" for="f-foto">Foto hidangan (opsional)</label><input class="tx" id="f-foto" type="file" accept="image/jpeg,image/png,image/webp"><span class="note" id="foto-name">${photoFile?esc(photoFile.name):'Foto membantu AI menaksir ukuran porsi.'}</span></div>`:''}
+  <div class="row">
+    ${st!=='off'?`<button type="button" class="btn primary" data-act="ai-est" ${st!=='on'||T.aiBusy?'disabled':''}>${T.aiBusy?'Menaksir...':'Taksir dengan AI'}</button>`:''}
+    ${T.aiBusy?'<button type="button" class="btn" data-act="ai-stop">Hentikan</button>':''}
+    <button type="button" class="btn${st==='off'?' primary':''}" data-act="local-est" ${T.aiBusy?'disabled':''}>Taksir cepat tanpa AI</button>
+  </div>
+  <span class="ai-status ${st}"><span class="dot"></span>${status}</span>
+  ${T.aiMsg?`<span class="ai-msg" role="alert">${esc(T.aiMsg)}</span>`:''}`;
+}
+function refreshAI(){const z=$('#ai-zone');if(z)z.innerHTML=aiZone();}
+function estBox(){
+  const x=S.est;if(!x)return '<p class="muted">Hasil taksiran muncul di sini.</p>';
+  const lv=levelOf(x);const st=stability(x);
+  const MAX=60;const pos=v=>Math.min(v,MAX)/MAX*100;
+  const zones=[['a',0,10],['b',10,20],['c',20,35],['d',35,MAX]];
+  const zoneHtml=zones.map(([z,a,b])=>`<span class="zone" style="left:${pos(a)}%;width:${pos(b)-pos(a)}%;background:var(--nl-${z})"></span>`).join('');
+  const rows=[['na','Natrium','mg',DAILY.na],['g','Gula','g',DAILY.g],['l','Lemak','g',DAILY.l]].map(([k,lab,unit,dl])=>{
+    const mid=x[k]/dl*100,lo=mid*(1-GALAT),hi=mid*(1+GALAT);const f=unit==='mg'?fmt:fmtV;
+    return `<div class="range"><span class="lbl">${lab}</span><div class="rtrack" role="img" aria-label="${lab} ${fmtV(mid)} persen batas harian, rentang ${fmtV(lo)} sampai ${fmtV(hi)} persen">${zoneHtml}<span class="band" style="left:${pos(lo)}%;width:${Math.max(1,pos(hi)-pos(lo))}%"></span><span class="mid" style="left:${pos(mid)}%"></span></div><span class="val">${f(x[k])} ${unit} (${f(x[k]*(1-GALAT))}–${f(x[k]*(1+GALAT))})</span></div>`;}).join('');
+  const ticks=`<div class="rscale"><span></span><div class="ticks">${[['A',5],['B',15],['C',27.5],['D',47.5]].map(([L,v])=>`<span style="left:${pos(v)}%;color:var(--ink-2)">${L}</span>`).join('')}</div><span class="sp2"></span></div>`;
+  const review=!st.stable||x.conf==='rendah'||x.campuran;
+  return `<div class="est"><div class="est-head">${nl(lv.L,true)}<div><b>Level ${lv.L} sementara · ${esc(S.form.nama)}</b><div class="small muted">${x.src==='ai'?'Taksiran AI'+(x.foto?' dengan foto':''):'Taksiran cepat tanpa AI'} · keyakinan ${esc(x.conf)}${x.campuran?' · hidangan campuran':''} · energi ${fmt(x.e)} kkal</div></div></div>
+    <div class="ranges">${ticks}${rows}</div>
+    <p class="note">Pita biru menunjukkan rentang galat ±38,3%. Garis tebal adalah nilai taksiran. Skala dalam persen batas harian.</p>
+    <p class="stab ${st.stable?'good':'warn'}">${st.stable?`Label tetap ${st.mid} di seluruh rentang galat.`:`Label bisa bergeser dari ${st.lo} ke ${st.hi} di rentang galat. Wajib ditinjau ahli gizi sebelum tampil.`}${st.stable&&review?' Hidangan campuran atau keyakinan rendah tetap perlu ditinjau.':''}</p>
+    ${x.alasan?`<p class="small"><b>Alasan.</b> ${esc(x.alasan)}</p>`:''}
+    ${x.saran?`<p class="small"><b>Saran reformulasi.</b> ${esc(x.saran)}</p>`:''}
+    <div class="row"><button type="button" class="btn primary" data-act="queue-add">Masukkan ke antrean validasi</button></div></div>`;
+}
+function qItem(it){
+  const lv=levelOf(it);const st=stability(it);const ed=T.editing&&T.editing.id===it.id;
+  const flags=[];if(!st.stable)flags.push(`Label bisa ${st.lo}–${st.hi}`);if(it.campuran)flags.push('Hidangan campuran');if(it.conf==='rendah')flags.push('Keyakinan rendah');
+  return `<div class="q"><div class="q-head">${nl(lv.L,true)}<div class="grow"><b>${esc(it.nama)}</b><span class="small muted">${KB[it.kat].label} · ${esc(it.porsi)} · ${it.src==='lokal'?'taksiran cepat':'taksiran AI'}</span></div></div>
+    <div class="pipe"><span class="on">Taksiran AI</span><i>›</i><span>Ahli gizi</span><i>›</i><span>Uji lab</span><i>›</i><span>Meja saji</span></div>
+    ${flags.length?`<div class="flags">${flags.map(f=>`<span class="flag">${esc(f)}</span>`).join('')}</div>`:''}
+    <span class="nums">Energi ${fmt(it.e)} kkal · gula ${fmtV(it.g)} g · natrium ${fmt(it.na)} mg · lemak ${fmtV(it.l)} g</span>
+    ${it.alasan?`<p class="small muted">${esc(it.alasan)}</p>`:''}
+    ${ed?editor(it,'ahli'):`<div class="row"><button type="button" class="btn sm" data-act="edit" data-id="${it.id}" data-mode="ahli">Tinjau sebagai ahli gizi</button><button type="button" class="btn ghost sm" data-act="q-del" data-id="${it.id}">Buang</button></div>`}</div>`;
+}
+function editor(it,mode){
+  const f=(k,lab,unit)=>`<label>${lab} (${unit})<input type="number" step="0.1" id="ed-${k}" value="${it[k]}"></label>`;
+  return `<div class="ed">${f('e','Energi','kkal')}${f('g','Gula','g')}${f('na','Natrium','mg')}${f('l','Lemak','g')}</div>
+  <p class="note">${mode==='ahli'?'Koreksi angka bila perlu, lalu setujui. Label akan dihitung ulang.':'Masukkan hasil uji laboratorium per porsi.'}</p>
+  <div class="row"><button type="button" class="btn primary sm" data-act="edit-save" data-id="${it.id}" data-mode="${mode}">${mode==='ahli'?'Setujui label':'Simpan hasil lab'}</button><button type="button" class="btn sm" data-act="edit-cancel">Batal</button></div>`;
+}
+function catRow(it){
+  const lv=levelOf(it);const ed=T.editing&&T.editing.id===it.id&&T.editing.mode==='lab';
+  const status=it.status==='lab'?'<span class="chip good">Uji lab</span>':'<span class="chip">Ahli gizi</span>';
+  return `<tr class="${it.aktif?'':'off'}"><td><b>${esc(it.nama)}</b>${it.reform?'<span class="tag-new">Resep baru</span>':''}<span class="sub">${esc(it.porsi)}${it.reform?' · '+esc(it.reform):''}</span></td><td>${KB[it.kat].label}</td>
+  <td><span class="row" style="flex-wrap:nowrap">${nl(lv.L)}<span class="small muted">${DRV[lv.drv]} ${fmt(lv.mx)}%</span></span></td>
+  <td class="num">${fmt(it.na)} mg</td><td class="num">${fmtV(it.g)} g</td><td class="num">${fmtV(it.l)} g</td>
+  <td><span class="row" style="flex-wrap:nowrap">${status}${it.status==='ahli'&&!ed?`<button type="button" class="btn ghost sm" data-act="edit" data-id="${it.id}" data-mode="lab">Catat uji lab</button>`:''}</span></td>
+  <td><label class="sw"><input type="checkbox" data-aktif="${it.id}" ${it.aktif?'checked':''} aria-label="Tampilkan ${esc(it.nama)} di meja saji"><span></span></label></td></tr>
+  ${ed?`<tr><td colspan="8">${editor(it,'lab')}</td></tr>`:''}`;
+}
+
+/* ---------- Dasbor ---------- */
+function viewDasbor(){
+  const I=rnsrInfo();const w=WF[S.wf];
+  const pill=I.r>=1?'<span class="pill good">✓ Sesuai</span>':'<span class="pill bad">✕ Belum sesuai</span>';
+  const opts=[];
+  S.menu.filter(it=>isValid(it)&&!it.aktif&&'AB'.includes(levelOf(it).L)).slice(0,3).forEach(it=>{opts.push({type:'act',it,r2:((I.ab+1)/(I.n+1)*100)/I.L});});
+  const PRI=['sayur-lodeh','es-teh','sambal','ayam-goreng','telur-balado','ayam-bakar','mendoan','rendang','es-jeruk'];
+  const pri=id=>{const i=PRI.indexOf(id);return i<0?99:i;};
+  activeMenu().filter(it=>'CD'.includes(levelOf(it).L)).map(it=>({it,nv:reformOf(it)})).filter(o=>'AB'.includes(levelOf(o.nv).L)).sort((a,b)=>pri(a.it.id)-pri(b.it.id)).slice(0,4).forEach(o=>{opts.push({type:'ref',it:o.it,nv:o.nv,r2:((I.ab+1)/I.n*100)/I.L});});
+  const optHtml=opts.map(o=>{const L=levelOf(o.it).L;
+    if(o.type==='act')return `<div class="opt"><div class="grow"><span class="t">Aktifkan ${esc(o.it.nama)} ${nl(L)}</span><span class="small muted">Sudah tervalidasi, belum tampil di meja saji</span></div><div class="opt-r"><span class="small mono">RNSR ${fmt(o.r2,2)}</span><button type="button" class="btn sm" data-act="activate" data-id="${o.it.id}">Aktifkan</button></div></div>`;
+    return `<div class="opt"><div class="grow"><span class="t">Reformulasi ${esc(o.it.nama)} ${nl(L)}<span aria-hidden="true">→</span>${nl(levelOf(o.nv).L)}</span><span class="small muted">${esc(o.nv.how)}</span></div><div class="opt-r"><span class="small mono">RNSR ${fmt(o.r2,2)}</span><button type="button" class="btn sm" data-act="reform" data-id="${o.it.id}">Terapkan</button></div></div>`;}).join('');
+  const tl=Math.min(Math.max(I.L,6),94),vl=Math.min(Math.max(I.pct,6),94);
+  const bullet=`<div class="bullet" role="img" aria-label="Menu Level A sampai B ${fmtV(I.pct)} persen, target ${fmtV(I.L)} persen"><span class="bg"></span><span class="val" style="width:${I.pct}%"></span><span class="tgt" style="left:${I.L}%"></span>
+    <span class="tl" style="left:${tl}%;transform:translateX(-50%)">Target ${fmtV(I.L)}% (${esc(I.top?I.top.label.toLowerCase():'-')})</span>
+    <span class="vl" style="left:${vl}%;transform:translateX(-50%)">A–B ${fmtV(I.pct)}%</span><span class="ax" style="left:0">0%</span><span class="ax" style="right:0">100%</span></div>`;
+  const stack=['A','B','C','D'].filter(L=>I.cnt[L]).map(L=>`<span class="sg nl-${L}" style="flex-grow:${I.cnt[L]}" title="Level ${L}: ${I.cnt[L]} menu">${I.cnt[L]/I.n>0.08?L+' '+I.cnt[L]:''}</span>`).join('');
+  const topId=I.top&&I.top.id;
+  const rbars=I.gs.map(g=>g.hidden?`<div class="rbar"><span>${esc(g.label)}</span><div class="trk hid" role="img" aria-label="Disembunyikan"></div><span class="rv muted">&lt; 20 orang</span></div>`
+    :`<div class="rbar"><span>${esc(g.label)}</span><div class="trk" role="img" aria-label="${esc(g.label)} ${fmtV(g.pct)} persen"><i class="${g.id===topId?'top':''}" style="width:${g.pct}%"></i></div><span class="rv">${fmtV(g.pct)}%${g.n!=null?' · '+fmt(g.n):''}</span></div>`).join('');
+  const need=w.total?Math.ceil(w.total*I.L/100):Math.ceil(I.L);
+  const focus={ob:'Porsi nasi kecil dan lauk rendah lemak di depan antrean',ht:'Sayur dan lauk Level A–B untuk natrium',gd:'Minuman tanpa gula di dekat kasir'};
+  const plan=I.gs.map(g=>`<div class="plan-row"><span>${esc(g.label)}</span><span class="v">${g.hidden?'disembunyikan':(g.n!=null?fmt(g.n)+' org':fmtV(g.pct)+'%')}</span><span class="s">${g.hidden?'Kelompok kurang dari 20 orang. Kantin memakai menu umum.':focus[g.id]}</span></div>`).join('');
+  const demandN=14+Object.keys(S.demand).length;
+  const live=liveToday();
+  return `<div class="filters"><label for="wf">Data tenaga kerja</label><select class="tx" id="wf">${Object.entries(WF).map(([id,x])=>`<option value="${id}" ${S.wf===id?'selected':''}>${esc(x.nama)}</option>`).join('')}</select><span class="small muted">Sumber ${esc(w.sumber)}. ${esc(w.note)}</span></div>
+  <div class="tiles">
+    <div class="tile"><span class="lab">RNSR hari ini</span><span class="num">${fmt(I.r,2)}</span>${pill}</div>
+    <div class="tile"><span class="lab">Menu Level A–B di meja saji</span><span class="num">${I.ab} dari ${I.n}</span><span class="sub">${fmtV(I.pct)}% menu aktif</span></div>
+    <div class="tile"><span class="lab">Kelompok risiko terbesar</span><span class="num">${fmtV(I.L)}%</span><span class="sub">${esc(I.top?I.top.label:'-')}${I.top&&I.top.n!=null?' · '+fmt(I.top.n)+' pekerja':''}</span></div>
+    <div class="tile"><span class="lab">Item Level A–B terjual hari ini</span><span class="num">${fmtV(live)}%</span><span class="sub">Transaksi anonim, termasuk nampan pekerja</span></div>
+  </div>
+  <div class="grid-2">
+    <section class="card"><div class="sec-head"><span class="eyebrow">Rasio Nampan Sesuai Rapor</span><h2>RNSR ${fmt(I.r,2)}</h2><p>RNSR membagi persentase menu Level A–B dengan persentase kelompok risiko terbesar. Nilai minimal 1 berarti setiap pekerja berisiko punya cukup pilihan menu yang aman.</p></div>
+      ${bullet}
+      <p class="formula">RNSR = ${fmtV(I.pct)}% ÷ ${fmtV(I.L)}% = ${fmt(I.r,2)}</p>
+      <h3 class="h">${I.r>=1?'Cara menambah ruang aman':'Cara menaikkan RNSR ke 1'}</h3>
+      <div class="opts">${optHtml||'<p class="muted">Tidak ada opsi cepat. Tambahkan menu baru lewat Modul 2.</p>'}</div>
+    </section>
+    <div class="stack-v">
+      <section class="card"><div class="sec-head"><span class="eyebrow">Ringkasan anonim</span><h3 class="h">Kelompok risiko pekerja</h3></div>
+        <div class="rbars">${rbars}</div>
+        <p class="lock"><span aria-hidden="true">●</span>Kantin tidak melihat nama maupun angka rapor. Kelompok di bawah 20 orang disembunyikan sesuai rancangan pelindungan data.</p>
+      </section>
+      <section class="card"><div class="sec-head"><span class="eyebrow">Meja Saji 2</span><h3 class="h">Komposisi Nutri-Level menu aktif</h3></div>
+        <div class="stackbar" role="img" aria-label="${['A','B','C','D'].map(L=>`Level ${L} ${I.cnt[L]} menu`).join(', ')}">${stack}</div>
+        <div class="stack-legend">${['A','B','C','D'].map(L=>`<span>${nl(L)}${I.cnt[L]} menu</span>`).join('')}</div>
+      </section>
+    </div>
+  </div>
+  <div class="grid-2" style="margin-top:16px">
+    <section class="card"><div class="table-head"><div class="sec-head"><span class="eyebrow">Tren uji coba</span><h3 class="h">Item Level A–B terjual per hari</h3></div><button type="button" class="btn ghost sm" data-act="table">${T.table?'Lihat grafik':'Lihat tabel'}</button></div>
+      <div class="lg"><span><i style="background:var(--s-ctx)"></i>Minggu sebelum SANGU</span><span><i style="background:var(--s1)"></i>Minggu dengan SANGU</span></div>
+      ${T.table?trendTable():'<div class="chart" id="trend"></div>'}
+      <p class="note">Data simulasi. Titik Jumat minggu SANGU dihitung langsung dari transaksi hari ini.</p>
+    </section>
+    <section class="card"><div class="sec-head"><span class="eyebrow">Menakar porsi</span><h3 class="h">Rencana porsi besok</h3></div>
+      <p class="big-plan">${w.total?`Siapkan minimal <b>${fmt(need)}</b> porsi lauk dan sayur Level A–B untuk <b>${fmt(w.total)}</b> pekerja.`:`Per 100 pekerja, siapkan minimal <b>${fmt(need)}</b> porsi lauk dan sayur Level A–B.`}</p>
+      <div class="plan">${plan}<div class="plan-row"><span>Permintaan menu Level A dari pekerja</span><span class="v">${demandN}</span><span class="s">Terkirim anonim saat rekomendasi nampan hanya punya satu jenis lauk.</span></div></div>
+      <p class="note">Takaran dari ringkasan risiko menekan sisa makanan. Bappenas (2021) mencatat pangan terbuang 115 sampai 184 kg per kapita per tahun.</p>
+    </section>
+  </div>`;
+}
+function trendSeries(){return {b:TREND.before,s:TREND.withS.concat([Math.round(liveToday()*10)/10])};}
+function trendTable(){const d=trendSeries();return `<div class="tbl-wrap"><table><thead><tr><th>Hari</th><th class="num">Sebelum SANGU</th><th class="num">Dengan SANGU</th></tr></thead><tbody>${TREND.days.map((x,i)=>`<tr><td>${x}${i===4?' (hari ini)':''}</td><td class="num">${fmtV(d.b[i])}%</td><td class="num">${fmtV(d.s[i])}%</td></tr>`).join('')}</tbody></table></div>`;}
+function drawTrend(){
+  const box=$('#trend');if(!box)return;
+  const W=Math.max(280,box.clientWidth||560),H=230,m={t:14,r:W<420?58:80,b:28,l:40};
+  const d=trendSeries();const y0=20,y1=70,n=TREND.days.length;
+  const x=i=>m.l+i*(W-m.l-m.r)/(n-1);const y=v=>m.t+(1-(v-y0)/(y1-y0))*(H-m.t-m.b);
+  let s=`<svg viewBox="0 0 ${W} ${H}" width="${W}" height="${H}" tabindex="0" role="img" aria-label="Persentase item Level A sampai B terjual per hari. Sebelum SANGU ${d.b.map(fmtV).join(', ')} persen. Dengan SANGU ${d.s.map(fmtV).join(', ')} persen.">`;
+  for(let v=y0;v<=y1;v+=10){s+=`<line x1="${m.l}" x2="${W-m.r}" y1="${y(v)}" y2="${y(v)}" style="stroke:${v===y0?'var(--axis)':'var(--grid)'};stroke-width:1"/><text x="${m.l-8}" y="${y(v)+4}" text-anchor="end" style="font-family:var(--font-mono);font-size:11px;fill:var(--muted)">${v}%</text>`;}
+  TREND.days.forEach((dd,i)=>{s+=`<text x="${x(i)}" y="${H-8}" text-anchor="middle" style="font-family:var(--font-body);font-size:12px;fill:var(--muted)">${dd}</text>`;});
+  const path=arr=>arr.map((v,i)=>`${i?'L':'M'}${x(i).toFixed(1)} ${y(v).toFixed(1)}`).join(' ');
+  s+=`<path d="${path(d.b)}" style="fill:none;stroke:var(--s-ctx);stroke-width:2;stroke-linejoin:round"/>`;
+  s+=`<path d="${path(d.s)}" style="fill:none;stroke:var(--s1);stroke-width:2;stroke-linejoin:round"/>`;
+  d.b.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="4" style="fill:var(--s-ctx);stroke:var(--surface);stroke-width:2"/>`;});
+  d.s.forEach((v,i)=>{s+=`<circle cx="${x(i)}" cy="${y(v)}" r="${i===n-1?5.5:4}" style="fill:var(--s1);stroke:var(--surface);stroke-width:2"/>`;});
+  let ya=y(d.s[n-1]),yb=y(d.b[n-1]);if(Math.abs(ya-yb)<16){const mid=(ya+yb)/2;ya=mid-9;yb=mid+9;}
+  s+=`<text x="${x(n-1)+10}" y="${ya+4}" style="font-family:var(--font-body);font-size:12px;font-weight:700;fill:var(--ink)">${fmtV(d.s[n-1])}%</text>`;
+  s+=`<text x="${x(n-1)+10}" y="${yb+4}" style="font-family:var(--font-body);font-size:12px;fill:var(--ink-2)">${fmtV(d.b[n-1])}%</text>`;
+  s+=`<line id="xh" x1="0" x2="0" y1="${m.t}" y2="${H-m.b}" style="stroke:var(--line-2);stroke-width:1;opacity:0"/>`;
+  s+=`<rect id="hit" x="${m.l-16}" y="0" width="${W-m.l-m.r+32}" height="${H}" style="fill:transparent"/></svg><div class="tt" id="tt" hidden></div>`;
+  box.innerHTML=s;
+  const svg=box.querySelector('svg'),tt=$('#tt'),xh=box.querySelector('#xh');
+  const show=i=>{if(i==null){tt.hidden=true;xh.style.opacity=0;return;}
+    xh.setAttribute('x1',x(i));xh.setAttribute('x2',x(i));xh.style.opacity=1;
+    tt.innerHTML=`<b>${TREND.days[i]}${i===n-1?' (hari ini)':''}</b><div class="r"><span><i class="dot" style="background:var(--s1)"></i>Dengan SANGU</span><span class="mono">${fmtV(d.s[i])}%</span></div><div class="r"><span><i class="dot" style="background:var(--s-ctx)"></i>Sebelum</span><span class="mono">${fmtV(d.b[i])}%</span></div>`;
+    tt.hidden=false;const sc=box.clientWidth/W;const px=x(i)*sc;const tw=tt.offsetWidth;
+    tt.style.left=Math.max(0,Math.min(box.clientWidth-tw,px+12>box.clientWidth-tw?px-tw-12:px+12))+'px';tt.style.top=Math.max(0,Math.min(y(d.s[i]),y(d.b[i]))*sc-30)+'px';};
+  const idxAt=ev=>{const r=svg.getBoundingClientRect();const px=(ev.clientX-r.left)/r.width*W;let best=0,bd=1e9;for(let i=0;i<n;i++){const dd=Math.abs(px-x(i));if(dd<bd){bd=dd;best=i;}}return best;};
+  svg.addEventListener('pointermove',ev=>{T.hover=idxAt(ev);show(T.hover);});
+  svg.addEventListener('pointerleave',()=>{T.hover=null;show(null);});
+  svg.addEventListener('focus',()=>{T.hover=n-1;show(T.hover);});
+  svg.addEventListener('blur',()=>{T.hover=null;show(null);});
+  svg.addEventListener('keydown',ev=>{if(ev.key==='ArrowRight'||ev.key==='ArrowLeft'){ev.preventDefault();T.hover=Math.max(0,Math.min(n-1,(T.hover==null?n-1:T.hover)+(ev.key==='ArrowRight'?1:-1)));show(T.hover);}});
+}
+
+/* ---------- footer ---------- */
+function renderAbout(){
+  $('#about').innerHTML=`<p>Prototipe ini adalah proof-of-concept Lampiran II esai SANGU. Data pekerja, menu, dan transaksi adalah contoh. Isian tersimpan di peramban ini saja. Resep hanya dikirim ke Claude bila tombol Taksir dengan AI ditekan.</p>
+  <details><summary>Cara angka dihitung</summary><ul>
+    <li>Batas harian mengikuti Permenkes 30/2013, yaitu gula 50 g, natrium 2.000 mg, dan lemak 67 g per orang per hari. Energi mengikuti AKG 2019.</li>
+    <li>Makan siang dihitung 40% dari batas harian. Rapor kuning memperketat batas 10–25% dan rapor merah 25–50%. Besaran penyesuaian adalah asumsi prototipe yang wajib dikalibrasi ahli gizi.</li>
+    <li>Nutri-Level prototipe memakai persentase batas harian untuk zat gizi tertinggi di antara gula, natrium, dan lemak, yaitu A ≤ 10%, B ≤ 20%, C ≤ 35%, D &gt; 35%. Ambang final mengikuti KMK HK.01.07/MENKES/301/2026.</li>
+    <li>Kecocokan pribadi membandingkan satu menu dengan jatah makan siang. Cocok ≤ 50%, Batasi ≤ 80%, Hindari &gt; 80%.</li>
+    <li>RNSR = persentase menu Level A–B ÷ persentase kelompok risiko terbesar, dengan target minimal 1.</li>
+    <li>Rentang galat taksiran AI ±38,3% mengikuti kajian sistematis Shonkoff dkk. (2023).</li>
+    <li>Ambang tekanan darah, gula darah, IMT, dan lingkar perut di prototipe untuk demonstrasi, bukan alat diagnosis.</li>
+  </ul></details>
+  <details><summary>Rujukan</summary><ol class="refs">
+    <li>Ardiansyah, M. Z., &amp; Widowati, E. (2024). Hubungan kebisingan dan karakteristik individu dengan kejadian hipertensi pada pekerja rigid packaging. <i>HIGEIA</i>, 8(1), 141–151. <a href="https://journal.unnes.ac.id/sju/higeia/article/view/75362" target="_blank" rel="noopener">https://journal.unnes.ac.id/sju/higeia/article/view/75362</a></li>
+    <li>Badan Kebijakan Pembangunan Kesehatan. (2024). <i>Survei Kesehatan Indonesia (SKI) 2023 dalam angka</i>. Kementerian Kesehatan RI. <a href="https://www.badankebijakan.kemkes.go.id/ski-2023-dalam-angka/" target="_blank" rel="noopener">https://www.badankebijakan.kemkes.go.id/ski-2023-dalam-angka/</a></li>
+    <li>Badan Kebijakan Pembangunan Kesehatan. (2026). <i>Nutri-Level: Melindungi konsumen, menyehatkan masyarakat, mendukung dunia usaha</i>. <a href="https://www.badankebijakan.kemkes.go.id/nutri-level-melindungi-konsumen-menyehatkan-masyarakat-mendukung-dunia-usaha/" target="_blank" rel="noopener">https://www.badankebijakan.kemkes.go.id/nutri-level-melindungi-konsumen-menyehatkan-masyarakat-mendukung-dunia-usaha/</a></li>
+    <li>Bappenas. (2021). <i>Laporan kajian food loss and waste di Indonesia</i>. Kementerian PPN/Bappenas. <a href="https://lcdi-indonesia.id/wp-content/uploads/2021/06/Report-Kajian-FLW-FINAL-4.pdf" target="_blank" rel="noopener">https://lcdi-indonesia.id/wp-content/uploads/2021/06/Report-Kajian-FLW-FINAL-4.pdf</a></li>
+    <li>Peraturan Menteri Kesehatan Nomor 28 Tahun 2019 tentang Angka Kecukupan Gizi yang Dianjurkan untuk Masyarakat Indonesia. <a href="https://peraturan.bpk.go.id/Details/138621/permenkes-no-28-tahun-2019" target="_blank" rel="noopener">https://peraturan.bpk.go.id/Details/138621/permenkes-no-28-tahun-2019</a></li>
+    <li>Peraturan Menteri Kesehatan Nomor 30 Tahun 2013 tentang Pencantuman Informasi Kandungan Gula, Garam, dan Lemak serta Pesan Kesehatan untuk Pangan Olahan dan Pangan Siap Saji. <a href="https://peraturan.bpk.go.id/Home/Details/172111/permenkes-no-30-tahun-2013" target="_blank" rel="noopener">https://peraturan.bpk.go.id/Home/Details/172111/permenkes-no-30-tahun-2013</a></li>
+    <li>Shonkoff, E., Cara, K. C., Pei, X. A., Chung, M., Kamath, S., Panetta, K., &amp; Hennessy, E. (2023). AI-based digital image dietary assessment methods compared to humans and ground truth: A systematic review. <i>Annals of Medicine</i>, 55(2), 2273497. <a href="https://doi.org/10.1080/07853890.2023.2273497" target="_blank" rel="noopener">https://doi.org/10.1080/07853890.2023.2273497</a></li>
+    <li>Thorndike, A. N., McCurley, J. L., Gelsomin, E. D., dkk. (2021). Automated behavioral workplace intervention to prevent weight gain and improve diet: The ChooseWell 365 randomized clinical trial. <i>JAMA Network Open</i>, 4(6), e2112528. <a href="https://doi.org/10.1001/jamanetworkopen.2021.12528" target="_blank" rel="noopener">https://doi.org/10.1001/jamanetworkopen.2021.12528</a></li>
+    <li>Undang-Undang Nomor 27 Tahun 2022 tentang Pelindungan Data Pribadi. <a href="https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022" target="_blank" rel="noopener">https://peraturan.bpk.go.id/Details/229798/uu-no-27-tahun-2022</a></li>
+    <li>World Health Organization. (2023). <i>WHO global report on sodium intake reduction</i>. <a href="https://www.who.int/publications/i/item/9789240069985" target="_blank" rel="noopener">https://www.who.int/publications/i/item/9789240069985</a></li>
+  </ol></details>
+  <div class="row"><button type="button" class="btn sm" data-act="reset">Atur ulang demo</button><span class="note">Mengembalikan semua data contoh ke kondisi awal.</span></div>`;
+}
+
+/* ---------- aksi ---------- */
+let toastT;
+function toast(msg){const t=$('#toast');t.textContent=msg;t.classList.add('show');clearTimeout(toastT);toastT=setTimeout(()=>t.classList.remove('show'),2800);}
+function rerender(){renderStrip();renderView();renderMbar();save();}
+const A={
+  role:el=>{S.role=el.dataset.v;render();},
+  tab:el=>{S.tab[S.role]=el.dataset.v;render();$('#tabs').scrollIntoView({block:'nearest'});},
+  goto:el=>{S.role='pekerja';S.tab.pekerja=el.dataset.v;render();window.scrollTo({top:0,behavior:REDUCED?'auto':'smooth'});},
+  persona:el=>{const v=el.dataset.v;if(v==='custom'){S.persona='custom';}else{S.persona=v;S.rapor=Object.assign({},PERSONAS[v]);S.refCode=null;}
+    if(S.tab.pekerja==='baca'&&S.role==='pekerja'){const f=$('#view');['usia','sis','dia','gds','imt','lp'].forEach(k=>{const i=$('#r-'+k,f);if(i)i.value=S.rapor[k];});updateBaca();renderStrip();save();}else rerender();},
+  sex:el=>{S.rapor.sex=el.dataset.v;updateBaca();renderStrip();save();},
+  'consent-on':()=>{S.consent=true;rerender();toast('Izin diberikan. Rapor dibaca di ponsel ini.');},
+  revoke:()=>{S.consent=false;S.refCode=null;rerender();toast('Izin dicabut. Profil batas gizi dihapus dari ponsel.');},
+  'make-ref':()=>{const c='ABCDEFGHJKLMNPQRSTUVWXYZ23456789';const r=n=>Array.from({length:n},()=>c[Math.floor(Math.random()*c.length)]).join('');S.refCode='RJK-'+r(3)+'-'+r(3);rerender();toast('Kode rujukan dibuat');},
+  'copy-ref':()=>{const code=S.refCode;if(!code)return;try{navigator.clipboard.writeText(code).then(()=>toast('Kode disalin'),()=>toast('Salin manual: '+code));}catch(e){toast('Salin manual: '+code);}},
+  scan:()=>{if(T.scanning)return;T.scanning=true;renderView();setTimeout(()=>{T.scanning=false;S.scanned=true;rerender();toast('Meja Saji 2 terbaca. Menu dicocokkan dengan rapor.');},REDUCED?150:1300);},
+  rescan:()=>{S.scanned=false;rerender();},
+  pick:el=>{const it=byId(el.dataset.id);if(!it)return;S.tray[it.kat]=S.tray[it.kat]===it.id?null:it.id;rerender();},
+  'tray-clear':el=>{S.tray[el.dataset.k]=null;if(!trayList(S.tray).length)S.usedReco=false;rerender();},
+  'tray-empty':()=>{S.tray=emptyTray();S.usedReco=false;rerender();},
+  reco:el=>{const rec=recommend(budgetOf().meal);const p=rec.picks[Number(el.dataset.i)];if(!p)return;S.tray=Object.assign({},p.tray);S.usedReco=true;rerender();if(window.innerWidth<=900){const tc=$('#tray-card');if(tc)tc.scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'start'});}},
+  habit:()=>{const t=emptyTray();for(const k in HABIT){const it=HABIT[k]&&byId(HABIT[k]);if(it&&it.aktif&&isValid(it))t[k]=it.id;}S.tray=t;S.usedReco=false;rerender();toast('Nampan kebiasaan lama dimuat');},
+  swap:el=>{S.tray[el.dataset.k]=el.dataset.to||null;rerender();toast('Nampan ditukar');},
+  take:()=>{
+    const b=budgetOf().meal,t=S.tray;if(!coreOk(t))return;
+    const list=trayList(t);const u=useOf(sumOf(list),b);const fit=okU(u);
+    if(S.today&&S.today.levels)S.today.levels.forEach(L=>{S.purch[L]=Math.max(0,S.purch[L]-1);});
+    const levels=list.map(it=>levelOf(it).L);levels.forEach(L=>{S.purch[L]++;});
+    S.today={tray:Object.assign({},t),fit,m:fit&&!S.usedReco,na:Math.round(u.na),levels};
+    T.stampAnim=fit;rerender();
+    toast(fit?(S.usedReco?'Nampan diambil. Sesuai rapor.':'Nampan diambil. Sesuai rapor dan dipilih mandiri.'):'Nampan diambil. Tercatat belum sesuai rapor.');
+  },
+  'to-tray':()=>{const tc=$('#tray-card');if(tc)tc.scrollIntoView({behavior:REDUCED?'auto':'smooth',block:'start'});},
+  'ai-est':()=>{runAI();},
+  'ai-stop':()=>{if(aiCtl)aiCtl.abort();},
+  'local-est':()=>{const f=S.form;if(!String(f.nama).trim()){T.aiMsg='Isi nama menu dulu.';refreshAI();return;}T.aiMsg='';S.est=localEstimate(f);renderView();save();toast('Taksiran cepat selesai');},
+  'queue-add':()=>{const x=S.est;if(!x)return;const f=S.form;const id='m'+Date.now().toString(36);
+    S.menu.push({id,nama:String(f.nama).trim()||'Menu baru',kat:f.kat,porsi:String(f.porsi).trim()||'1 porsi',e:x.e,g:x.g,na:x.na,l:x.l,status:'ai',aktif:false,src:x.src,conf:x.conf,campuran:x.campuran,alasan:x.alasan,saran:x.saran});
+    S.est=null;rerender();toast('Masuk antrean validasi. Belum tampil di meja saji.');},
+  'q-del':el=>{S.menu=S.menu.filter(x=>x.id!==el.dataset.id);rerender();},
+  edit:el=>{T.editing={id:el.dataset.id,mode:el.dataset.mode};renderView();const i=$('#ed-e');if(i)i.focus();},
+  'edit-cancel':()=>{T.editing=null;renderView();},
+  'edit-save':el=>{const it=byId(el.dataset.id);if(!it)return;const g=k=>{const v=parseFloat(String(($('#ed-'+k)||{}).value||'').replace(',','.'));return isFinite(v)&&v>=0?v:it[k];};
+    it.e=g('e');it.g=g('g');it.na=g('na');it.l=g('l');
+    if(el.dataset.mode==='ahli'){it.status='ahli';toast(`Label ${it.nama} disetujui (Level ${levelOf(it).L}). Nyalakan di katalog agar tampil.`);}
+    else{it.status='lab';toast(`Hasil lab ${it.nama} tersimpan. Label final Level ${levelOf(it).L}.`);}
+    T.editing=null;rerender();},
+  activate:el=>{const it=byId(el.dataset.id);if(!it)return;const before=rnsrInfo().r;it.aktif=true;afterMenuChange(before,`${it.nama} tampil di meja saji`);},
+  reform:el=>{const it=byId(el.dataset.id);if(!it)return;const before=rnsrInfo().r;const nv=reformOf(it);
+    ['e','g','na','l'].forEach(k=>{if(nv[k]!=null)it[k]=nv[k];});it.reform=nv.how;it.status='ahli';
+    afterMenuChange(before,`Resep baru ${it.nama} disetujui ahli gizi (simulasi). Uji lab dijadwalkan`);},
+  table:()=>{T.table=!T.table;renderView();},
+  reset:()=>{try{localStorage.removeItem(KEY);}catch(e){}S=defaultState();T.editing=null;T.table=false;photoFile=null;render();window.scrollTo({top:0});toast('Demo kembali ke kondisi awal');}
+};
+function afterMenuChange(before,msg){
+  const I=rnsrInfo();rerender();renderTop();
+  if(before<1&&I.r>=1)toast(`RNSR ${fmt(I.r,2)}. Menu kantin kini sesuai rapor ${WF[S.wf].nama}.`);
+  else toast(`${msg}. RNSR ${fmt(I.r,2)}.`);
+}
+document.addEventListener('click',e=>{const el=e.target.closest('[data-act]');if(!el)return;const f=A[el.dataset.act];if(f)f(el,e);});
+document.addEventListener('keydown',e=>{const el=e.target.closest&&e.target.closest('[role="button"][data-act]');if(el&&(e.key==='Enter'||e.key===' ')){e.preventDefault();el.dispatchEvent(new MouseEvent('click',{bubbles:true}));}});
+document.addEventListener('input',e=>{
+  const t=e.target;
+  if(t.dataset.r){const v=parseFloat(String(t.value).replace(',','.'));if(isFinite(v)){S.rapor[t.dataset.r]=v;if(S.persona!=='custom'){S.persona='custom';}}updateBaca();renderStrip();save();}
+  else if(t.dataset.f){S.form[t.dataset.f]=t.value;save();}
+});
+document.addEventListener('change',e=>{
+  const t=e.target;
+  if(t.id==='consent'){S.consent=t.checked;if(!S.consent)S.refCode=null;updateBaca();renderStrip();save();toast(S.consent?'Izin diberikan':'Izin dicabut. Meja saji memakai label seragam.');}
+  else if(t.id==='wf'){S.wf=t.value;rerender();}
+  else if(t.id==='f-kat'){S.form.kat=t.value;save();}
+  else if(t.id==='f-foto'){photoFile=t.files&&t.files[0]||null;const n=$('#foto-name');if(n)n.textContent=photoFile?photoFile.name:'Foto membantu AI menaksir ukuran porsi.';}
+  else if(t.dataset&&t.dataset.aktif){const it=byId(t.dataset.aktif);if(!it)return;const before=rnsrInfo().r;it.aktif=t.checked;afterMenuChange(before,`${it.nama} ${it.aktif?'tampil di':'ditarik dari'} meja saji`);}
+});
+let rz;window.addEventListener('resize',()=>{clearTimeout(rz);rz=setTimeout(()=>{if(S.role==='kantin'&&S.tab.kantin==='dasbor'&&!T.table)drawTrend();},150);});
+
+/* ---------- mulai ---------- */
+(function initHash(){const h=(location.hash||'').replace('#','');
+  if(['baca','temu','riwayat'].includes(h)){S.role='pekerja';S.tab.pekerja=h;}
+  else if(['nilai','dasbor'].includes(h)){S.role='kantin';S.tab.kantin=h;}})();
+renderAbout();render();
+})();
+</script>
+</body></html>
